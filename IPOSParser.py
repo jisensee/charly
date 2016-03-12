@@ -10,7 +10,6 @@ class Parser:
 		Gets the next string literal which starts at the specified position.
 		Returns the found literal.
 		"""
-		#import pdb; pdb.set_trace()
 		
 		index = self.code.find("'", start)
 		if index == -1:
@@ -23,7 +22,7 @@ class Parser:
 		
 		i = 0
 		code = self.code
-		#import pdb; pdb.set_trace()
+		
 		# loop through the code with i as index
 		while i < len(self.code):
 			# If we find a quote its an unbound string literal
