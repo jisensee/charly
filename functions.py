@@ -26,7 +26,7 @@ def IStrip(s, *args):
 	
 def IWrap(s, *args):
 	"""Removes all newlines"""
-	return "".join([c for c in s if c in "\n\r"])
+	return "".join(re.split(r"\\n|\\r", s))
 	
 def IReplace(s, *args):
 	"""Replaces all occurences of a pattern"""
