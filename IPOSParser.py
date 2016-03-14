@@ -22,10 +22,10 @@ class Parser:
 		
 		i = 0
 		code = self.code
-		
+		#import pdb;pdb.set_trace()
 		# loop through the code with i as index
-		while i < len(self.code):
-			# If we find a quote its an unbound string literal
+		while i < len(code):
+			# If we find a quote its an unbound string literal which gets appended to the current string
 			if code[i] == "'":
 				literal = self.getStringLiteral(i + 1)
 				command = getCommand("")

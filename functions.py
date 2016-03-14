@@ -29,12 +29,12 @@ def IWrap(s, *args):
 	return "".join(re.split(r"\\n|\\r", s))
 	
 def IReplace(s, *args):
-	"""Replaces all occurences of a pattern"""
+	"""Replaces all occurences of a  regex pattern"""
 
 	# Replacement is given
 	if len(args) == 2 and isinstance(args[0], str) and isinstance(args[1], str):
 		return re.sub(args[0], args[1], s)
 	
-def IAppendString(s, toAppeand):
+def IAppendString(s, toAppend):
 	"""Appends the given string"""
-	return s + toAppend[0]
+	return s + toAppend
