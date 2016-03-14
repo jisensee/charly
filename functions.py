@@ -4,7 +4,7 @@ def IEval(s, *args):
 	"""Executes the numeric calculations given by the input string"""
 	
 	# only keep chars for numeric calculations 
-	s = "".join([c for c in s if c in "1234567890+-/*"])
+	s = "".join([c for c in s if c in "1234567890+-/*."])
 	
 	# remove leading zeros in number literals
 	s = re.sub(r"0+(\d+)", r"\1", s)
