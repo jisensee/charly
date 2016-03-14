@@ -34,6 +34,13 @@ def IReplace(s, *args):
 	# Replacement is given
 	if len(args) == 2 and isinstance(args[0], str) and isinstance(args[1], str):
 		return re.sub(args[0], args[1], s)
+		
+def IMultiply(s, *args):
+	"""Repeats every character in the string"""
+	
+	repCount = 2
+	
+	return "".join([c*repCount for c in s])
 	
 def IAppendString(s, toAppend):
 	"""Appends the given string"""

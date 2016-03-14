@@ -8,6 +8,7 @@ commandList = [
 	Command("s", IStrip, [0, 1]),
 	Command("w", IWrap, [0]),
 	Command("R", IReplace, [0, 1, 2]),
+	Command("*", IMultiply, [0]),
 ]
 
 def isKnownCommand(command):
