@@ -21,7 +21,7 @@ def popArguments(stack, modeList, arity):
 	# Loop through all the modes and takes the first on that matches the stack types
 	modeName = None
 	for mode in modeList:
-		if all(map(lambda t: t[0] == t[1], zip(topStackTypes, mode["types"]))):
+		if all(map(lambda t: isinstance(t[0], t[1]) , zip(topStack, mode["types"]))):
 			modeName = mode["name"]
 			break
 			
@@ -31,8 +31,88 @@ def popArguments(stack, modeList, arity):
 		typesList = [m["types"] for m in modeList]
 		message =  "Excepted one of the types %s on the stack, but got %s!" % (typesList, topStackTypes)
 		raise InvalidStackContentsException(message)
+
 	
-"""
+def IClearStack(stack):
+	"""Clears the stack"""
+	del stack[:]
+	
+	
+def IDuplicateTopStackItem(stack):
+	modeList = [{
+			"types" : [object],
+			"name" : "duplicate"
+		},
+	]
+	
+	M, A = popArguments(stack, modeList, 1)
+	
+	# Duplicate the top item on the stack
+	if M == "duplicate":
+		stack.append(A)
+		stack.append(A)
+		
+		
+def ICopyStackItem(stack):
+	modeList = [{
+			"types" : [int],
+			"name" : "copy"
+		},
+	]
+	
+	M, A = popArguments(stack, modeList, 1)
+	
+	if M == "copy":
+		result = stack[A % len(stack)]
+		stack.append(result)
+		
+		
+def ISwapTopStackItems(stack):
+	modeList = [{
+			"types" : [object, object],
+			"name" : "swap"
+		},
+	]
+	
+	M, B, A = popArguments(stack, modeList, 2)
+	
+	if M == "swap":
+		stack.append(A)
+		stack.append(B)
+		
+	
+def IRotateTopStack(stack):
+	modeList = [{
+			"types" : [object, object, object],
+			"name" : "rotate"
+		},
+	]
+	
+	M, C, B, A = popArguments(stack, modeList, 3)
+	
+	if M == "rotate":
+		stack.append(B)
+		stack.append(A)
+		stack.append(C)
+		
+def IReverseStack(stack):
+	"""Reverses the stack"""
+	stack.reverse()
+
+def IDiscardTopStackItem(stack):
+	modeList = [{
+			"types" : [object],
+			"name" : "discard"
+		},
+	]
+	
+	M, A = popArguments(stack, modeList, 1)
+	
+	# Top item already got popped, nothing to do
+	if A == "discard":
+		pass
+		
+		"""
 The following functions take the stack as paramter, pop the needed arguments and push the result.
 The stack gets mutated in place, so nothing is returned
 A always refers to the top item, B to the item after that, etc.
