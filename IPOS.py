@@ -39,6 +39,15 @@ def run(code, stack):
 				stack.append(code[i+1 : index])
 				i = index + 1
 		
+		# If current char is a space, find the next non-space char and point i on it
+		elif code[i].isspace():
+			x = i
+			while code[x].isspace():
+				x += 1
+				if x == len(code):
+					break;
+			i = x
+			
 		# Current char is a command
 		else:
 			if code[i] in commands:
