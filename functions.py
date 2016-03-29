@@ -1,47 +1,104 @@
 import re
+from errors import InvalidStackContentsException
 
-def IEval(s, *args):
-	"""Executes the numeric calculations given by the input string"""
+def checkStack(stack, *typeList):
+	"""
+	Checks if the stack contains the given types starting at the top
+	Raises InvalidStackContentsException if the types are not correct or
+	if the amount of given types is greater than the amount of stack elements.
+	Returns the top len(typeList) items from the stack as a list in the order top to bottom.
+	"""
+	typeCount = len(typeList)
+	
+	if len(stack) < typeCount:
+		message = "Expected %s items on the stack, but the stack only contains %s!" % (typeCount, len(stack))
+		raise InvalidStackContentsException(message)
+	else:
+		# Only take the last typeCount items from the stack, ordered top to bottom
+		newStack = stack[-typeCount:][::1]
+		stackTypes = [type(i) for i in newStack]
+		
+		if not all(map(lambda t: t[0] == t[1], zip(stackTypes, typeList))):
+			message = "Excepted the types %s on the stack, but got %s!" % (typeList, stackTypes)
+			raise InvalidStackContentsException(message)
+		else:
+			result = []
+			for i in range(len(typeList)):
+				result.append(stack.pop())
+			
+			return result[0] if len(result) == 1 else result
+
+"""
+The following functions take the stack as paramter, pop the needed arguments and push the result.
+The stack gets mutated in place, so nothing is returned
+A always refers to the top item, B to the item after that, etc.
+"""
+			
+def IEval(stack):
+	"""Executes the numeric calculations in A and pushes the result as int"""
+	
+	A = checkStack(stack, str)
 	
 	# only keep chars for numeric calculations 
-	s = "".join([c for c in s if c in "1234567890+-/*."])
+	allowedChars = "1234567890+-/*"
+	result = "".join([c for c in A if c in allowedChars])
 	
 	# remove leading zeros in number literals
-	s = re.sub(r"0+(\d+)", r"\1", s)
+	result = re.sub(r"0+(\d+)", r"\1", result)
 	
-	return str(eval(s));
+	# Replace float through integer division
+	result = re.sub(r"[^/]/[^/]", "//", result)
+	
+	result = eval(result)
+	
+	stack.append(result)
 
-def IReverse(s, *args):
-	"""Reverses the string"""
-	return s[::-1]
 	
-def IStrip(s, *args):
-	"""Removes leading and trailing whitespaces"""
+def IReverse(stack):
+	"""reversed(A)"""
 	
-	# No arguments -> Just strip whitespaces
-	if len(args) == 0:
-		return s.strip()
-	elif len(args) == 1:
-		return s.strip(args[0])
+	A = checkStack(stack, str)
 	
-def IWrap(s, *args):
-	"""Removes all newlines"""
-	return "".join(re.split(r"\\n|\\r", s))
+	result = A[::-1]
 	
-def IReplace(s, *args):
-	"""Replaces all occurences of a  regex pattern"""
+	stack.append(result)
+	
+	
+def IStrip(stack):
+	"""A.strip(B)"""
+	
+	A, B = checkStack(stack, str, str)
+	
+	result = A.strip(B)
+	
+	stack.append(result)
+	
+	
+def IWrap(stack):
+	"""Removes all newlines from A"""
+	
+	A = checkStack(stack, str)
+	
+	result = "".join(re.split(r"\\n|\\r", A))
+	
+	stack.append(result)
+	
+	
+def IReplace(stack):
+	"""Replaces all occurences of a regex pattern B with C in A"""
 
-	# Replacement is given
-	if len(args) == 2 and isinstance(args[0], str) and isinstance(args[1], str):
-		return re.sub(args[0], args[1], s)
+	A = checkStack(stack, str, str)
+	
+	result = re.sub(B, C, A)
+	
+	stack.append(result)
 		
-def IMultiply(s, *args):
-	"""Repeats every character in the string"""
+		
+def IMultiply(stack):
+	"""Repeats every character in A B times"""
 	
-	repCount = 2
+	A, B = checkStack(stack, str, int)
 	
-	return "".join([c*repCount for c in s])
+	result = "".join([c*B for c in A])
 	
-def IAppendString(s, toAppend):
-	"""Appends the given string"""
-	return s + toAppend
+	stack.append(result)
