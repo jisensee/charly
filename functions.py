@@ -1,7 +1,7 @@
 import re
 from errors import InvalidStackContentsException
 
-def checkStack(stack, *typeList):
+def processStack(stack, *typeList):
 	"""
 	Checks if the stack contains the given types starting at the top
 	Raises InvalidStackContentsException if the types are not correct or
@@ -37,7 +37,7 @@ A always refers to the top item, B to the item after that, etc.
 def IEval(stack):
 	"""Executes the numeric calculations in A and pushes the result as int"""
 	
-	A = checkStack(stack, str)
+	A = processStack(stack, str)
 	
 	# only keep chars for numeric calculations 
 	allowedChars = "1234567890+-/*"
@@ -57,7 +57,7 @@ def IEval(stack):
 def IReverse(stack):
 	"""reversed(A)"""
 	
-	A = checkStack(stack, str)
+	A = processStack(stack, str)
 	
 	result = A[::-1]
 	
@@ -67,7 +67,7 @@ def IReverse(stack):
 def IStrip(stack):
 	"""A.strip(B)"""
 	
-	A, B = checkStack(stack, str, str)
+	A, B = processStack(stack, str, str)
 	
 	result = A.strip(B)
 	
@@ -77,7 +77,7 @@ def IStrip(stack):
 def IWrap(stack):
 	"""Removes all newlines from A"""
 	
-	A = checkStack(stack, str)
+	A = processStack(stack, str)
 	
 	result = "".join(re.split(r"\\n|\\r", A))
 	
@@ -87,7 +87,7 @@ def IWrap(stack):
 def IReplace(stack):
 	"""Replaces all occurences of a regex pattern B with C in A"""
 
-	A = checkStack(stack, str, str)
+	A = processStack(stack, str, str)
 	
 	result = re.sub(B, C, A)
 	
@@ -97,7 +97,7 @@ def IReplace(stack):
 def IMultiply(stack):
 	"""Repeats every character in A B times"""
 	
-	A, B = checkStack(stack, str, int)
+	A, B = processStack(stack, str, int)
 	
 	result = "".join([c*B for c in A])
 	
