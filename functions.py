@@ -33,7 +33,7 @@ def popArguments(stack, modeList, arity, unpack = True):
 		return [modeName] + [stack.pop().value if unpack else stack.pop() for i in range(arity)][::-1]
 	else:
 		typesList = [m["types"] for m in modeList]
-		message =  "Excepted one of the types %s on the stack, but got %s!" % (typesList, topStackTypes)
+		message =  "Excepted one of the types %s on the stack, but got %s" % (typesList, topStackTypes)
 		raise InvalidStackContentsException(message)
 
 	
@@ -59,7 +59,7 @@ def IDuplicateTopStackItem(stack):
 		
 def ICopyStackItem(stack):
 	modeList = [{
-			"types" : [int],
+			"types" : [Integer],
 			"name" : "copy"
 		},
 	]
