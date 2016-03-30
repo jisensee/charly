@@ -13,7 +13,7 @@ def handleIntegerLiteral(stack, code, index):
 		x += 1
 		if x == len(code):
 			break
-	stack.append(Integer(int(code[i : x])))
+	stack.append(Integer(int(code[index : x])))
 	
 	return x
 	
