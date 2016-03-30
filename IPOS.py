@@ -26,4 +26,4 @@ if __name__ == "__main__":
 		print(result)
 		
 	except IposException as e:
-		print(e.message)
+		print("ERROR: %s" % e.message)

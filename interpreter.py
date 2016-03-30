@@ -1,7 +1,14 @@
 from commands import commands
-from errors import CommandNotExistingException, MissingCharacterException
-from iposTypes import Integer, String, Commands
+from errors import CommandNotExistingException, MissingCharacterException, InvalidVariableNameException
+from iposTypes import Integer, String, Commands, Item
 
+variables = {
+	"A" : String("abcdefghijklmnopqrstuvwxyz"),
+	"D" : String("0123456789"),
+	"E" : String(""),
+	"S" : String(" "),
+	"T" : Integer(2),
+}
 
 def handleIntegerLiteral(stack, code, index):
 	"""
@@ -60,6 +67,42 @@ def handleSpace(code, index):
 		
 	return index
 	
+	
+def handleVariable(stack, code, index):
+	"""
+	Pushes the value of the  the variable at the given index to the stack
+	Returns the index of the next character in the code
+	"""
+	value = variables[code[index]]
+	
+	stack.append(value)
+		
+	return index + 1
+
+	
+def assignVariable(stack):
+	from functions import popArguments
+	modeList = [{
+			"types" : [Item, String],
+			"name" : "assignVariable"
+		},
+	]
+	
+	M, B, A = popArguments(stack, modeList, 2, unpack=False)
+	
+	# Assign the B to a variable named A and leaves the value of A on the stack
+	if M == "assignVariable":
+		if len(A.value) != 1:
+			raise InvalidVariableNameException(A.value)
+		else:
+			variables[A.value] = B
+			
+			if isinstance(B, String):
+				stack.append(String(B.value))
+			elif isinstance(B, Integer):
+				stack.append(Integer())
+			elif isinstance(B.value, Commands):
+				stack.append(Commands(B.value))
 
 def handleCommand(stack, code, index):
 	"""
@@ -105,7 +148,16 @@ def run(code, stack):
 		# If current char is a space, find the next non-space char and point i on it
 		elif code[i].isspace():
 			i = handleSpace(code, i)
-			
+		
+		# If current char is a variable, replace it with its value and set i to the next char		
+		elif code[i] in variables:
+			i = handleVariable(stack, code, i)
+		
+		# If the current char is equal sign, assign the 2nd top value to a variable given in the string at the top
+		elif code[i] == "=":
+			assignVariable(stack)
+			i += 1
+		
 		# Current char is a command
 		else:
 			i = handleCommand(stack, code, i)

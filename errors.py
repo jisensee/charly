@@ -21,3 +21,9 @@ class InvalidStackContentsException(IposException):
 	def __init__(self, message):
 		super().__init__()
 		self.message += message
+
+		
+class InvalidVariableNameException(IposException):
+
+	def __init__(self, variableName):
+		self.message = "The name of a variable can't be longer than one character, but it was %s characters long!" % len(variableName)
