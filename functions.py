@@ -299,10 +299,11 @@ def applyCommands(commands, inputStr, rand = False):
 	
 	stack = [String(inputStr)]
 	
-	if rand and random.choice([0, 1]):
+	if rand and random.choice([0, 1]) or not rand:
 		result = joinStack(run(commands, stack))
 	else:
 		result = joinStack(stack)
+	
 
 	return result
 	
@@ -335,7 +336,7 @@ def IApplyToParts(stack):
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToParts":
-		result = "".join(map(lambda c: applyCommands(A, c), C.split(B)))
+		result = B.join(map(lambda c: applyCommands(A, c), C.split(B)))
 		
 		stack.append(String(result))
 	
@@ -352,6 +353,6 @@ def IApplyToPartsRandomly(stack):
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToPartsRandomly":
-		result = "".join(map(lambda c: applyCommands(A, c, rand = True), C.split(B)))
+		result = B.join(map(lambda c: applyCommands(A, c, rand = True), C.split(B)))
 		
 		stack.append(String(result))
