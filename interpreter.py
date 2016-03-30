@@ -81,7 +81,7 @@ def joinStack(stack):
 def run(code, stack):
 	""""
 	Runs the code with the given stack
-	The stack is modified in-place so nothing is returned
+	The stack is modified in-place but also gets returned
 	"""
 	
 	# loop through the code with i as index
