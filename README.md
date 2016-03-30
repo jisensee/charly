@@ -29,5 +29,5 @@ cbA.fed.ihg
 'r     Push a r to the stac (A)
 {      Convert the top stack element to a Command (A)
 %      Split C on B, apply A to every part and join the result on B
-       Implicitly output the stack contens
+       Implicitly output the stack contents
 ```
