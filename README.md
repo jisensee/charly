@@ -27,7 +27,7 @@ cbA.fed.ihg
        Implicit: place input string on the stack (C)
 '.     Push a dot to the stack (B)
 'r     Push a r to the stac (A)
-{      Convert the top stack element to a Command (A)
+{      Convert the top stack element to a Command (r-> reverse) (A)
 %      Split C on B, apply A to every part and join the result on B
-       Implicitly output the stack contents
+       Implicit: Output the stack contents
 ```
