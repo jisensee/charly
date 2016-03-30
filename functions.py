@@ -336,7 +336,9 @@ def IApplyToParts(stack):
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToParts":
-		result = B.join(map(lambda c: applyCommands(A, c), C.split(B)))
+		splittedStr = C if B == "" else C.split(B)
+		
+		result = B.join(map(lambda c: applyCommands(A, c), splittedStr))
 		
 		stack.append(String(result))
 	
@@ -353,6 +355,8 @@ def IApplyToPartsRandomly(stack):
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToPartsRandomly":
-		result = B.join(map(lambda c: applyCommands(A, c, rand = True), C.split(B)))
+		splittedStr = C if B == "" else C.split(B)
+		
+		result = B.join(map(lambda c: applyCommands(A, c, rand = True), splittedStr))
 		
 		stack.append(String(result))
