@@ -1,6 +1,8 @@
 import sys
 import argparse
 from interpreter import run
+from errors import IposException
+from iposTypes import String
 
 if __name__ == "__main__":
 	
@@ -10,7 +12,7 @@ if __name__ == "__main__":
 	args = parser.parse_args()
 	
 	if args.input:
-		stack = [args.input]
+		stack = [String(args.input)]
 	else:
 		stack = []
 	

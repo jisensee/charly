@@ -1,6 +1,6 @@
 from commands import commands
-from errors import CommandNotExistingException, MissingCharacterException, IposException
-from iposTypes import Integer, String, Commands
+from errors import CommandNotExistingException, MissingCharacterException
+from iposTypes import Integer, String
 
 
 def handleIntegerLiteral(stack, code, index):

@@ -1,5 +1,7 @@
 import re
+
 from errors import InvalidStackContentsException
+from iposTypes import *
 
 def popArguments(stack, modeList, arity):
 	"""
@@ -26,7 +28,7 @@ def popArguments(stack, modeList, arity):
 			break
 			
 	if modeName:
-		return [modeName] + [stack.pop() for i in range(arity)][::-1]
+		return [modeName] + [stack.pop().value for i in range(arity)][::-1]
 	else:
 		typesList = [m["types"] for m in modeList]
 		message =  "Excepted one of the types %s on the stack, but got %s!" % (typesList, topStackTypes)
@@ -40,7 +42,7 @@ def IClearStack(stack):
 	
 def IDuplicateTopStackItem(stack):
 	modeList = [{
-			"types" : [object],
+			"types" : [Item],
 			"name" : "duplicate"
 		},
 	]
@@ -69,7 +71,7 @@ def ICopyStackItem(stack):
 		
 def ISwapTopStackItems(stack):
 	modeList = [{
-			"types" : [object, object],
+			"types" : [Item, Item],
 			"name" : "swap"
 		},
 	]
@@ -83,7 +85,7 @@ def ISwapTopStackItems(stack):
 	
 def IRotateTopStack(stack):
 	modeList = [{
-			"types" : [object, object, object],
+			"types" : [Item, Item, Item],
 			"name" : "rotate"
 		},
 	]
@@ -101,7 +103,7 @@ def IReverseStack(stack):
 
 def IDiscardTopStackItem(stack):
 	modeList = [{
-			"types" : [object],
+			"types" : [Item],
 			"name" : "discard"
 		},
 	]
@@ -121,7 +123,7 @@ A always refers to the top item, B to the item after that, etc.
 def IEval(stack):
 	
 	modeList = [{
-			"types" : [str],
+			"types" : [String],
 			"name" : "eval"
 		},
 	]
@@ -148,7 +150,7 @@ def IEval(stack):
 def IReverse(stack):
 	
 	modeList = [{
-			"types" : [str],
+			"types" : [String],
 			"name" : "reverse"
 		},
 	]
@@ -165,10 +167,10 @@ def IReverse(stack):
 def IStrip(stack):
 	
 	modeList = [{
-			"types" : [str, str],
+			"types" : [String, String],
 			"name" : "stripString"
 		}, {
-			"types" : [str, int],
+			"types" : [String, Integer],
 			"name" : "stripInt"
 		}
 	]
@@ -190,7 +192,7 @@ def IStrip(stack):
 def IWrap(stack):
 	
 	modeList = [{
-			"types" : [str],
+			"types" : [String],
 			"name" : "wrap"
 		},
 	]
@@ -207,7 +209,7 @@ def IWrap(stack):
 def IReplace(stack):
 
 	modeList = [{
-			"types" : [str, str, str],
+			"types" : [String, String, String],
 			"name" : "replace"
 		}, 
 	]
@@ -224,7 +226,7 @@ def IReplace(stack):
 def IMultiply(stack):
 	
 	modeList = [{
-			"types" : [str, int],
+			"types" : [String, Integer],
 			"name" : "multiply"
 		},
 	]
@@ -236,3 +238,10 @@ def IMultiply(stack):
 		result = "".join([c*A for c in B])
 		
 		stack.append(result)
+
+def IPushCommands(stack):
+	
+	modeList = [{
+			"types" : []
+		}
+	]
