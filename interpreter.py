@@ -1,6 +1,6 @@
 from commands import commands
 from errors import CommandNotExistingException, MissingCharacterException
-from iposTypes import Integer, String
+from iposTypes import Integer, String, Commands
 
 
 def handleIntegerLiteral(stack, code, index):
@@ -24,7 +24,7 @@ def handleCharLiteral(stack, code, index):
 	Returns the index of the first character after the character literal
 	"""
 	if index + 1 < len(code):
-		stack.append(String(code[i + 1]))
+		stack.append(String(code[index + 1]))
 		index += 2
 	else:
 		raise MissingCharacterException(index + 1)
@@ -74,9 +74,15 @@ def handleCommand(stack, code, index):
 		
 	return index
 
+def joinStack(stack):
+	"""Joins the stack into one string and return it. Skips Commands."""
+	return "".join([str(e.value) for e in stack if not isinstance(e, Commands)])
 
 def run(code, stack):
-	""""Runs the code with the given stack"""
+	""""
+	Runs the code with the given stack
+	The stack is modified in-place so nothing is returned
+	"""
 	
 	# loop through the code with i as index
 	i = 0
@@ -104,4 +110,4 @@ def run(code, stack):
 		else:
 			i = handleCommand(stack, code, i)
 	
-	return "".join([str(e) for e in stack])
+	return stack

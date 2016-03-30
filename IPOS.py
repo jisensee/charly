@@ -1,6 +1,6 @@
 import sys
 import argparse
-from interpreter import run
+from interpreter import run, joinStack
 from errors import IposException
 from iposTypes import String
 
@@ -17,6 +17,13 @@ if __name__ == "__main__":
 		stack = []
 	
 	try:
-		print(run(args.code, stack))
+		# Run the code
+		run(args.code, stack)
+		
+		# Join the stack into one string
+		result = joinStack(stack)
+		
+		print(result)
+		
 	except IposException as e:
 		print(e.message)
