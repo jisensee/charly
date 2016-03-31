@@ -11,7 +11,7 @@ If you want to implement planned functions, having an idea about a new function 
 At the start of a program the input gets placed on the stack automatically. At the end all stack items (excluding commands) get converted to a string, concatenated from bottom to top and printed. For example the program
 
 ```
-'.'r{%
+'.`r`%
 ```
 
 splits an input string on dots, reverses each substring and joins the substrings back on dots.
@@ -26,8 +26,7 @@ cbA.fed.ihg
 ```
        Implicit: place input string on the stack (C)
 '.     Push a dot to the stack (B)
-'r     Push a r to the stac (A)
-{      Convert the top stack element to a Command (r-> reverse) (A)
+`r`    Push the reverse command to the stack (A)
 %      Split C on B, apply A to every part and join the result on B
        Implicit: Output the stack contents
 ```
