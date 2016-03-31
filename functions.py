@@ -32,12 +32,12 @@ def ICopyStackItem(stack):
 		},
 	]
 	
-	M, A = popArguments(stack, modeList, 1, unpack=False)
+	M, A = popArguments(stack, modeList, 1)
 	
 	# Copies the item at index A to the top of the stack
 	if M == "copy":
-		result = stack.get(A % stack.getLength())
-		stack.append(result)
+		result = stack.getItem(A % stack.getLength())
+		stack.push(result)
 		
 		
 def ISwapTopStackItems(stack, unpack=False):
@@ -62,16 +62,13 @@ def IRotateTopStack(stack, unpack=False):
 		},
 	]
 	
-	M, C, B, A = popArguments(stack, modeList, 3)
+	M, C, B, A = popArguments(stack, modeList, 3, unpack=False)
 	
 	if M == "rotate":
 		stack.push(B)
 		stack.push(A)
 		stack.push(C)
-		
-def IReverseStack(stack, unpack=False):
-	"""Reverses the stack"""
-	stack.reverse()
+
 
 def IDiscardTopStackItem(stack):
 	modeList = [{
@@ -113,6 +110,21 @@ def IEval(stack):
 		
 		stack.pushString(result)
 
+
+def ISlice(stack):
+	modeList = [{
+			"types" : [String, Integer, Integer],
+			"name" : "sliceIntInt"
+		},
+	]
+	
+	K, C, B, A = popArguments(stack, modeList, 3)
+	
+	if K == "sliceIntInt":
+		result = C[B % len(C) : A % len(C)]
+		
+		stack.pushString(result)
+		
 	
 def IReverse(stack):
 	
