@@ -1,4 +1,3 @@
-import sys
 import argparse
 from interpreter import run, joinStack
 from errors import IposException

@@ -2,7 +2,6 @@ from functions import *
 
 commands = {
 	# Stack manipulation
-	"#" : IClearStack,
 	"_" : IDuplicateTopStackItem,
 	";" : IDiscardTopStackItem,
 	"/" : ISwapTopStackItems,
@@ -17,11 +16,10 @@ commands = {
 	"w" : IWrap,
 	"R" : IReplace,
 	"*" : IMultiply,
-	"s" : ISwapCase,
+	"k" : ISwapCase,
 	
 	# Functional programming
-	"{" : IPushCommands,
-	"}" : IExecuteCommands,
+	"#" : IExecuteCommands,
 	"~" : IApplyToChars,
 	"%" : IApplyToParts,
 	"?" : IApplyToPartsRandomly,

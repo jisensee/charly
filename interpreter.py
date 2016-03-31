@@ -1,6 +1,7 @@
 from commands import commands
 from errors import CommandNotExistingException, MissingCharacterException, InvalidVariableNameException
-from iposTypes import Integer, String, Commands, Item
+from iposTypes import Integer, String, Command, Item
+
 
 variables = {
 	"A" : String("abcdefghijklmnopqrstuvwxyz"),
@@ -9,6 +10,44 @@ variables = {
 	"S" : String(" "),
 	"T" : Integer(2),
 }
+
+def handleMultiCharLiteral(stack, code, index, literalType):
+	"""
+	Pushes the literal starting at the given index to the stack as the given type.
+	Returns the index of the first character after the literal.
+	"""
+	if literalType == String:
+		seperator = "\""
+	elif literalType == Command :
+		seperator = "`"
+		
+	separatorIndex = code.find(seperator, index + 1)
+	
+	# If separator is not found, literal goes until the end of the code
+	if separatorIndex == -1:
+		result = code[index + 1 :]
+		index = len(code)
+	# Otherwise it goes untli the closing separator
+	else:
+		result = code[index + 1 : separatorIndex]
+		index = separatorIndex + 1
+		
+	stack.append(literalType(result))
+		
+	return index
+	
+def handleSingleCharLiteral(stack, code, index, literalType):
+	"""
+	Pushes the literal at the position after the given index to the stack as the given type.
+	Returns the index of the first character after the literal.
+	"""
+	if index + 1 < len(code):
+		stack.append(literalType(code[index + 1]))
+		index += 2
+	else:
+		raise MissingCharacterException(index + 1)
+		
+	return index
 
 def handleIntegerLiteral(stack, code, index):
 	"""
@@ -23,37 +62,6 @@ def handleIntegerLiteral(stack, code, index):
 	stack.append(Integer(int(code[index : x])))
 	
 	return x
-	
-
-def handleCharLiteral(stack, code, index):
-	"""
-	Pushes the character literal at the given index to the stack.
-	Returns the index of the first character after the character literal
-	"""
-	if index + 1 < len(code):
-		stack.append(String(code[index + 1]))
-		index += 2
-	else:
-		raise MissingCharacterException(index + 1)
-		
-	return index
-	
-
-def handleStringLiteral(stack, code, index):
-	"""
-	Pushes the string literal starting at the given index to the stack.
-	Returns the index of the first character in the code ofter the string literal.
-	"""
-	quoteIndex = code.find("\"", index + 1)
-	if quoteIndex == -1:
-		stack.append(String(code[index + 1 :]))
-		index = len(code)
-	else:
-		stack.append(String(code[index + 1 : quoteIndex]))
-		index = quoteIndex + 1
-		
-	return index
-	
 
 def handleSpace(code, index):
 	"""
@@ -81,7 +89,7 @@ def handleVariable(stack, code, index):
 
 	
 def assignVariable(stack):
-	from functions import popArguments
+	from helperFunctions import popArguments
 	modeList = [{
 			"types" : [Item, String],
 			"name" : "assignVariable"
@@ -101,8 +109,9 @@ def assignVariable(stack):
 				stack.append(String(B.value))
 			elif isinstance(B, Integer):
 				stack.append(Integer())
-			elif isinstance(B.value, Commands):
-				stack.append(Commands(B.value))
+			elif isinstance(B.value, Command):
+				stack.append(Command(B.value))
+
 
 def handleCommand(stack, code, index):
 	"""
@@ -117,9 +126,11 @@ def handleCommand(stack, code, index):
 		
 	return index
 
+
 def joinStack(stack):
-	"""Joins the stack into one string and return it. Skips Commands."""
-	return "".join([str(e.value) for e in stack if not isinstance(e, Commands)])
+	"""Joins the stack into one string and return it."""
+	return "".join([str(e.value) for e in stack ])
+
 
 def run(code, stack):
 	""""
@@ -130,20 +141,25 @@ def run(code, stack):
 	# loop through the code with i as index
 	i = 0
 	while i < len(code):
-		# If current char is a digit, search the next non-digit char
-		# and push all the digits between them to the stack as one integer literal
+		# Push an integer literal
 		if code[i].isdigit():
 			i = handleIntegerLiteral(stack, code, i)
 			
-		# If the current char is a single quote we push the following
-		# character to the stack as  a string literal
+		# Push single char string literal
 		elif code[i] == "'":
-			i = handleCharLiteral(stack, code, i)
+			i = handleSingleCharLiteral(stack, code, i, String)
+			
+		# Push single char commands literal
+		elif code[i] == "!":
+			i = handleSingleCharLiteral(stack, code, i, Command)
 		
-		# If the current char is a double quote, we search the ending one and push
-		# the string between them to the stack. If there is no ending quote we take everything
+		# Push multi char string literal
 		elif code[i] == "\"":
-			i = handleStringLiteral(stack, code, i)
+			i = handleMultiCharLiteral(stack, code, i, String)
+			
+		# Push multi char commands literal
+		elif code[i] == "`":
+			i = handleMultiCharLiteral(stack, code, i, Command)
 		
 		# If current char is a space, find the next non-space char and point i on it
 		elif code[i].isspace():

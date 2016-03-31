@@ -1,5 +1,5 @@
 class Meta(type):
-	def __repr__(c):
+	def __repr__(self, c):
 		
 		if c.__name__ == "Item":
 			return "<item>"
@@ -7,7 +7,7 @@ class Meta(type):
 			return "<int>"
 		elif c.__name__ == "String":
 			return "<str>"
-		elif c.__name__ == "Commands":
+		elif c.__name__ == "Command":
 			return "<cmd>"
 
 			
@@ -25,5 +25,5 @@ class String(Item, metaclass=Meta):
 	pass
 	
 	
-class Commands(Item, metaclass=Meta):
+class Command(Item, metaclass=Meta):
 	pass
