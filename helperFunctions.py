@@ -2,6 +2,7 @@ import random
 
 from errors import InvalidStackContentsException
 from iposTypes import String
+from stack import Stack
 
 
 def popArguments(stack, modeList, arity, unpack = True):
@@ -14,12 +15,12 @@ def popArguments(stack, modeList, arity, unpack = True):
     Each list element represents a mode in which the command can work depending on the argument types on the stack
     """
     
-    if len(stack) < arity:
-        message = "Expected %s items on the stack, but the stack only contains %s!" % (arity, len(stack))
+    if stack.getLength() < arity:
+        message = "Expected %s items on the stack, but the stack only contains %s!" % (arity, stack.getLength())
         raise InvalidStackContentsException(message)
 
     # Take the top arity items from the stack
-    topStack = stack[-arity:]
+    topStack = stack.getTopItems(arity)
     topStackTypes = [type(i) for i in topStack]
 
     # Loop through all the modes and takes the first on that matches the stack types
@@ -42,14 +43,21 @@ def applyCommands(commands, inputStr, rand = False):
     Executes the given commands with the given input-string and returns the joined stack.
     If random is True, then the commands only get executed with a 50% chance.
     """
-    from interpreter import run, joinStack
+    from interpreter import run
     
-    stack = [String(inputStr)]
+    stack = Stack([String(inputStr)])
     
     if rand and random.choice([0, 1]) or not rand:
-        result = joinStack(run(commands, stack))
+        result = run(commands, stack).join()
     else:
-        result = joinStack(stack)
+        result = stack.join()
     
 
     return result
+
+def splitString(separator, s):
+    """Splits s on separator. Also works for empty separators which then returns all characters of s"""
+    
+    splittedStr = s if separator == "" else s.split(separator)
+    
+    return splittedStr

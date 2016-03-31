@@ -1,7 +1,9 @@
+#!/usr/bin/env python3
+
 import argparse
-from interpreter import run, joinStack
+from interpreter import run
 from errors import IposException
-from iposTypes import String
+from stack import Stack
 
 if __name__ == "__main__":
 	
@@ -10,17 +12,17 @@ if __name__ == "__main__":
 	parser.add_argument("-i", "--input", help="The input string which is initially placed on the stack.")
 	args = parser.parse_args()
 	
+	stack = Stack()
+	
 	if args.input:
-		stack = [String(args.input)]
-	else:
-		stack = []
+		stack.pushString(args.input)
 	
 	try:
 		# Run the code
 		run(args.code, stack)
 		
 		# Join the stack into one string
-		result = joinStack(stack)
+		result = stack.join()
 		
 		print(result)
 		

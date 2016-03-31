@@ -1,13 +1,13 @@
 class Meta(type):
-	def __repr__(self, c):
+	def __repr__(self):
 		
-		if c.__name__ == "Item":
+		if self.__name__ == "Item":
 			return "<item>"
-		elif c.__name__ == "Integer":
+		elif self.__name__ == "Integer":
 			return "<int>"
-		elif c.__name__ == "String":
+		elif self.__name__ == "String":
 			return "<str>"
-		elif c.__name__ == "Command":
+		elif self.__name__ == "Command":
 			return "<cmd>"
 
 			

@@ -32,7 +32,7 @@ def handleMultiCharLiteral(stack, code, index, literalType):
 		result = code[index + 1 : separatorIndex]
 		index = separatorIndex + 1
 		
-	stack.append(literalType(result))
+	stack.push(literalType(result))
 		
 	return index
 	
@@ -42,7 +42,7 @@ def handleSingleCharLiteral(stack, code, index, literalType):
 	Returns the index of the first character after the literal.
 	"""
 	if index + 1 < len(code):
-		stack.append(literalType(code[index + 1]))
+		stack.push(literalType(code[index + 1]))
 		index += 2
 	else:
 		raise MissingCharacterException(index + 1)
@@ -59,7 +59,7 @@ def handleIntegerLiteral(stack, code, index):
 		x += 1
 		if x == len(code):
 			break
-	stack.append(Integer(int(code[index : x])))
+	stack.pushInteger(int(code[index : x]))
 	
 	return x
 
@@ -83,7 +83,7 @@ def handleVariable(stack, code, index):
 	"""
 	value = variables[code[index]]
 	
-	stack.append(value)
+	stack.push(value)
 		
 	return index + 1
 
@@ -106,11 +106,11 @@ def assignVariable(stack):
 			variables[A.value] = B
 			
 			if isinstance(B, String):
-				stack.append(String(B.value))
+				stack.pushString(B.value)
 			elif isinstance(B, Integer):
-				stack.append(Integer())
+				stack.pushInteger(B.value)
 			elif isinstance(B.value, Command):
-				stack.append(Command(B.value))
+				stack.pushCommand(B.value)
 
 
 def handleCommand(stack, code, index):
@@ -125,11 +125,6 @@ def handleCommand(stack, code, index):
 		raise CommandNotExistingException(index, code[index])
 		
 	return index
-
-
-def joinStack(stack):
-	"""Joins the stack into one string and return it."""
-	return "".join([str(e.value) for e in stack ])
 
 
 def run(code, stack):

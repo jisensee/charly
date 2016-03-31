@@ -17,10 +17,14 @@ commands = {
 	"R" : IReplace,
 	"*" : IMultiply,
 	"k" : ISwapCase,
+	"-" : IRemove,
+	"+" : IConcatenate,
 	
 	# Functional programming
 	"#" : IExecuteCommands,
 	"~" : IApplyToChars,
 	"%" : IApplyToParts,
 	"?" : IApplyToPartsRandomly,
+	"O" : ISort,
+	"o" : ISortWithKey,
 }

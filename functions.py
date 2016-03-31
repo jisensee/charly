@@ -1,7 +1,7 @@
 import re
 
 from iposTypes import Item, String, Integer, Command
-from helperFunctions import popArguments, applyCommands
+from helperFunctions import popArguments, applyCommands, splitString
 
 
 """
@@ -21,8 +21,8 @@ def IDuplicateTopStackItem(stack):
 	
 	# Duplicate the top item on the stack
 	if M == "duplicate":
-		stack.append(A)
-		stack.append(A)
+		stack.push(A)
+		stack.push(A)
 		
 		
 def ICopyStackItem(stack):
@@ -34,8 +34,9 @@ def ICopyStackItem(stack):
 	
 	M, A = popArguments(stack, modeList, 1, unpack=False)
 	
+	# Copies the item at index A to the top of the stack
 	if M == "copy":
-		result = stack[A % len(stack)]
+		result = stack.get(A % stack.getLength())
 		stack.append(result)
 		
 		
@@ -48,9 +49,10 @@ def ISwapTopStackItems(stack, unpack=False):
 	
 	M, B, A = popArguments(stack, modeList, 2, unpack=False)
 	
+	# Swaps the position of A and B on the stack
 	if M == "swap":
-		stack.append(A)
-		stack.append(B)
+		stack.push(A)
+		stack.push(B)
 		
 	
 def IRotateTopStack(stack, unpack=False):
@@ -63,9 +65,9 @@ def IRotateTopStack(stack, unpack=False):
 	M, C, B, A = popArguments(stack, modeList, 3)
 	
 	if M == "rotate":
-		stack.append(B)
-		stack.append(A)
-		stack.append(C)
+		stack.push(B)
+		stack.push(A)
+		stack.push(C)
 		
 def IReverseStack(stack, unpack=False):
 	"""Reverses the stack"""
@@ -109,7 +111,7 @@ def IEval(stack):
 		
 		result = eval(result)
 		
-		stack.append(String(result))
+		stack.pushString(result)
 
 	
 def IReverse(stack):
@@ -126,7 +128,7 @@ def IReverse(stack):
 	if M == "reverse":
 		result = A[::-1]
 		
-		stack.append(String(result))
+		stack.pushString(result)
 		
 	
 def IStrip(stack):
@@ -146,13 +148,13 @@ def IStrip(stack):
 	if M == "stripString":
 		result = B.strip(A)
 		
-		stack.append(result)
+		stack.pushString(result)
 		
 	# Remove A leading and trailing chars from B
 	elif M == "stripInt":
 		result = B[A : -A]
 		
-		stack.append(String(result))
+		stack.pushString(result)
 	
 def IWrap(stack):
 	
@@ -168,7 +170,7 @@ def IWrap(stack):
 	if M == "wrap":		
 		result = "".join(re.split(r"\\n|\\r", A))
 		
-		stack.append(String(result))
+		stack.pushString(result)
 	
 	
 def IReplace(stack):
@@ -185,7 +187,7 @@ def IReplace(stack):
 	if M == "replace":
 		result = re.sub(B, A, C)
 		
-		stack.append(String(result))
+		stack.pushString(result)
 		
 		
 def IMultiply(stack):
@@ -202,7 +204,7 @@ def IMultiply(stack):
 	if M == "multiply":
 		result = "".join([c*A for c in B])
 		
-		stack.append(String(result))
+		stack.pushString(result)
 		
 
 def ISwapCase(stack):
@@ -217,8 +219,52 @@ def ISwapCase(stack):
 	
 	if M == "swapCase":
 		result = A.swapcase()
-		stack.append(String(result))
+		stack.pushString(result)
 		
+def IRemove(stack):
+	
+	modeList = [{
+			"types" : [String, String],
+			"name" : "removeCharsFromStr"
+		}, {
+			"types" : [String, Integer],
+			"name" : "removeEverNChar"
+		},
+	]
+	
+	M, B, A = popArguments(stack, modeList, 2)
+	
+	# Remove all characters in A from B
+	if M == "removeCharsFromStr":
+		result = "".join(filter(lambda c: c not in A, B))
+		
+		stack.pushString(result)
+		
+	# Remove every Ath char from B
+	elif M == "removeEverNChar":
+		result = "".join(map(lambda t: t[1], filter(lambda t: t[0] % A != 0, enumerate(B))))
+		
+		stack.pushString(result)
+	
+def IConcatenate(stack):
+	
+	modeList = [{
+			"types" : [String, String],
+			"name" : "concatStrings"
+		}, {
+			"types" : [Integer, Integer],
+			"name" : "concatInts"
+		},
+	]
+	
+	M, B, A = popArguments(stack, modeList, 2)
+	
+	# B + A
+	if M == "concatStrings":
+		stack.pushString(B + A)
+	# str(b) + str(A)
+	elif M == "concatInts":
+		stack.pushString(str(B) + str(A))
 	
 def IExecuteCommands(stack):
 	from interpreter import run
@@ -250,7 +296,7 @@ def IApplyToChars(stack):
 	if M == "applyToChars":
 		result = "".join(map(lambda c: applyCommands(A, c), B))
 		
-		stack.append(String(result))
+		stack.pushString(result)
 		
 	
 def IApplyToParts(stack):
@@ -265,11 +311,11 @@ def IApplyToParts(stack):
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToParts":
-		splittedStr = C if B == "" else C.split(B)
+		splittedStr = splitString(B, C)
 		
 		result = B.join(map(lambda c: applyCommands(A, c), splittedStr))
 		
-		stack.append(String(result))
+		stack.pushString(result)
 	
 	
 def IApplyToPartsRandomly(stack):
@@ -284,8 +330,67 @@ def IApplyToPartsRandomly(stack):
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToPartsRandomly":
-		splittedStr = C if B == "" else C.split(B)
+		splittedStr = splitString(B, C)
 		
 		result = B.join(map(lambda c: applyCommands(A, c, rand = True), splittedStr))
 		
-		stack.append(String(result))
+		stack.pushString(result)
+		
+def ISort(stack):
+	
+	modeList = [{
+			"types" : [String, String],
+			"name" : "sort"
+		},
+	]
+	
+	M, A, B = popArguments(stack, modeList, 2)
+	
+	# SPlit B on A, sort the substrings ascending and join back on B
+	if M == "sort":
+		splittedStr = splitString(B, A)
+		result = B.join(sorted(splittedStr))
+		
+		stack.pushString(result)
+	
+def ISortWithKey(stack):
+	
+	modeList = [{
+			"types" : [String, String, Command],
+			"name" : "sortWithKey"
+		},
+	]
+	
+	M, C, B, A = popArguments(stack, modeList, 3)
+	
+	# Split C on B, sort parts with key function A and join back on B
+	if M == "sortWithKey":
+		splittedStr = splitString(B, C)
+		
+		# Apply  mapping function to all substrings
+		mappingStrings = map(lambda c: applyCommands(A, c), splittedStr)
+		
+		def getKey(mappingString):
+			"""Map a mapping string to its key value"""
+			# Remove every non-digit from the mapping string
+			digits = "".join(filter(lambda c: c.isdigit(), mappingString))
+			
+			# If there were digits in the string, convert them to int
+			if digits != "":
+				key = int(digits)
+			# otherwise use the length of the mapping string as key
+			else:
+				key = len(mappingString)
+			
+			return key
+		
+		keyList = map(getKey, mappingStrings)
+		
+		# zip splittedStr and keyList together, sort the resulting list by the keyList-part,
+		# only take the mappingString-part of the sorted result and join back on B
+		zipped = zip(splittedStr, keyList)
+		sortedList = sorted(zipped, key=lambda t: t[1])
+		result = B.join(map(lambda t: t[0], sortedList))
+		
+		stack.pushString(result)
+		
