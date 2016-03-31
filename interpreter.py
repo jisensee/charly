@@ -4,9 +4,10 @@ from iposTypes import Integer, String, Command, Item
 
 
 variables = {
-	"A" : String("abcdefghijklmnopqrstuvwxyz"),
-	"N" : String("0123456789"),
+	"B" : "\n",
 	"E" : String(""),
+	"L" : String("abcdefghijklmnopqrstuvwxyz"),
+	"N" : String("0123456789"),
 	"S" : String(" "),
 	"T" : Integer(2),
 }
