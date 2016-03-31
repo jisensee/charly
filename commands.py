@@ -25,6 +25,9 @@ commands = {
 	"~" : IApplyToChars,
 	"%" : IApplyToParts,
 	"?" : IApplyToPartsRandomly,
-	"O" : ISort,
-	"o" : ISortWithKey,
+	"A" : ISortAsc,
+	"a" : ISortAscWithKey,
+	"D" : ISortDesc,
+	"d" : ISortDescWithKey,
+	"o" : ISort,
 }

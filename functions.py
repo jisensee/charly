@@ -1,7 +1,7 @@
 import re
 
 from iposTypes import Item, String, Integer, Command
-from helperFunctions import popArguments, applyCommands, splitString
+from helperFunctions import popArguments, applyCommands, splitString, sortAscWithKey
 
 
 """
@@ -336,7 +336,8 @@ def IApplyToPartsRandomly(stack):
 		
 		stack.pushString(result)
 		
-def ISort(stack):
+		
+def ISortAsc(stack):
 	
 	modeList = [{
 			"types" : [String, String],
@@ -346,51 +347,76 @@ def ISort(stack):
 	
 	M, A, B = popArguments(stack, modeList, 2)
 	
-	# SPlit B on A, sort the substrings ascending and join back on B
+	# Split B on A, sort the substrings ascending and join back on B
 	if M == "sort":
 		splittedStr = splitString(B, A)
 		result = B.join(sorted(splittedStr))
 		
 		stack.pushString(result)
 	
-def ISortWithKey(stack):
+	
+def ISortAscWithKey(stack):
 	
 	modeList = [{
 			"types" : [String, String, Command],
-			"name" : "sortWithKey"
+			"name" : "sortAscWithKey"
 		},
 	]
 	
 	M, C, B, A = popArguments(stack, modeList, 3)
 	
-	# Split C on B, sort parts with key function A and join back on B
-	if M == "sortWithKey":
-		splittedStr = splitString(B, C)
-		
-		# Apply  mapping function to all substrings
-		mappingStrings = map(lambda c: applyCommands(A, c), splittedStr)
-		
-		def getKey(mappingString):
-			"""Map a mapping string to its key value"""
-			# Remove every non-digit from the mapping string
-			digits = "".join(filter(lambda c: c.isdigit(), mappingString))
-			
-			# If there were digits in the string, convert them to int
-			if digits != "":
-				key = int(digits)
-			# otherwise use the length of the mapping string as key
-			else:
-				key = len(mappingString)
-			
-			return key
-		
-		keyList = map(getKey, mappingStrings)
-		
-		# zip splittedStr and keyList together, sort the resulting list by the keyList-part,
-		# only take the mappingString-part of the sorted result and join back on B
-		zipped = zip(splittedStr, keyList)
-		sortedList = sorted(zipped, key=lambda t: t[1])
-		result = B.join(map(lambda t: t[0], sortedList))
+	# Split C on B, sort parts ascending with key function A and join back on B
+	if M == "sortAscWithKey":
+		result = sortAscWithKey(C, B, A)
 		
 		stack.pushString(result)
 		
+		
+def ISortDesc(stack):
+	
+	modeList = [{
+			"types" : [String, String],
+			"name" : "sortDesc"
+		},
+	]
+	
+	M, A, B = popArguments(stack, modeList, 2)
+	
+	# SPlit B on A, sort the substrings descending and join back on B
+	if M == "sortDesc":
+		splittedStr = splitString(B, A)
+		result = B.join(sorted(splittedStr, reverse=True))
+		
+		stack.pushString(result)
+	
+	
+def ISortDescWithKey(stack):
+	
+	modeList = [{
+			"types" : [String, String, Command],
+			"name" : "sortDescWithKey"
+		},
+	]
+	
+	M, C, B, A = popArguments(stack, modeList, 3)
+	
+	# Split C on B, sort parts descending with key function A and join back on B
+	if M == "sortDescWithKey":
+		result = sortAscWithKey(C, B, A, True)
+		
+		stack.pushString(result)
+		
+def ISort(stack):
+	
+	modeList = [{
+			"types" : [String],
+			"name" : "sort"
+		},
+	]
+	
+	M, A = popArguments(stack, modeList, 1)
+	
+	if M == "sort":
+		result = "".join(sorted(A))
+		
+		stack.pushString(result)

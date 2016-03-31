@@ -5,7 +5,7 @@ from iposTypes import Integer, String, Command, Item
 
 variables = {
 	"A" : String("abcdefghijklmnopqrstuvwxyz"),
-	"D" : String("0123456789"),
+	"N" : String("0123456789"),
 	"E" : String(""),
 	"S" : String(" "),
 	"T" : Integer(2),
