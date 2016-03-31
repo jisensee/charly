@@ -105,12 +105,7 @@ def assignVariable(stack):
 		else:
 			variables[A.value] = B
 			
-			if isinstance(B, String):
-				stack.pushString(B.value)
-			elif isinstance(B, Integer):
-				stack.pushInteger(B.value)
-			elif isinstance(B.value, Command):
-				stack.pushCommand(B.value)
+			stack.push(B)
 
 
 def handleCommand(stack, code, index):
