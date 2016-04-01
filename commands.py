@@ -13,6 +13,7 @@ commands = {
 	"A" : ISortAsc,#
 	"D" : ISortDesc,#
 	"e" : IEval,#
+	"h" : IFirstChar,
 	"k" : ISwapCase,#
 	"l" : ILowerCase,#
 	"o" : ISort,
@@ -20,17 +21,17 @@ commands = {
 	"r" : IReverse,
 	"s" : IStrip,
 	"u" : IUpperCase,#
-	"w" : IWrap,	
-	"*" : IMultiply,	
+	"v" : ILastChar,
+	"w" : IWrap,
+	"x" : IRemoveWithRegex,
+	"y" : IAllButFirstChar,
+	"z" : IAllButLastChar,
+	"*" : IMultiply,
 	"-" : IRemove,
 	"+" : IConcatenate,
 	":" : ISlice,
 	"<" : IFirstChars,
 	">" : ILastChars,
-	"h" : IFirstChar,
-	"v" : ILastChar,
-	"y" : IAllButFirstChar,
-	"z" : IAllButLastChar,
 	
 	# Functional programming
 	"#" : IExecuteCommands,

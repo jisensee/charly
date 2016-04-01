@@ -225,6 +225,19 @@ def IRemove(stack):
 		result = "".join(map(lambda t: t[1], filter(lambda t: t[0] % A != 0, enumerate(B))))
 		stack.pushString(result)
 	
+def IRemoveWithRegex(stack):
+	modeList = [{
+			"types" : [String, String],
+			"name" : "removeWithRegex"
+		},
+	]
+	M, B, A = stack.popArguments(modeList, 2)
+	
+	# Remove all matches of the regex A in B from B
+	if M == "removeWithRegex":
+		result = re.sub(A, "", B)
+		stack.pushString(result)
+	
 def IConcatenate(stack):
 	modeList = [{
 			"types" : [String, String],
