@@ -18,22 +18,22 @@ class Stack:
 	def pushString(self, string):
 		"""Push a string to the stack"""
 		self.content.append(String(string))
- 
+
 	def pushInteger(self, integer):
 		"""Push an integer to the stack"""
 		self.content.append(Integer(integer))
- 
+
 	def pushCommand(self, command):
 		"""Push a command to the stack"""
 		self.content.append(Command(command))
- 
+
 	def push(self, item):
 		"""
 		Push the item as it is to the stack.
 		It has to be ensured that it is already one of the IposTypes.
 		"""
 		self.content.append(item)
- 
+
 	def popArguments(self, modeList, arity, unpack=True):
 		"""
 		Expects a modeList and an arity and returns the operands and the corrosponding mode	 in the format
@@ -65,7 +65,7 @@ class Stack:
 			typesList = [m["types"] for m in modeList]
 			message =  "Excepted one of the types %s on the stack, but got %s" % (typesList, topStackTypes)
 			raise InvalidStackContentsException(message)
- 
+
 	def pop(self):
 		"""Returns the top element from the stack and removes it"""
 		return self.content.pop()
