@@ -368,9 +368,22 @@ def IUppercase(stack):
 	]
 	M, A = stack.popArguments(modeList, 1)
 	
-	# Uppercase the string
+	# Uppercase the A
 	if M == "uppercase":
 		result = A.upper()
+		stack.pushString(result)
+
+def ILowercase(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "lowercase"
+		},
+	]
+	M, A = stack.popArguments(modeList, 1)
+	
+	# Lowercase the A
+	if M == "lowercase":
+		result = A.lower()
 		stack.pushString(result)
 
 def IFirstChars(stack):

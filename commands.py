@@ -13,6 +13,7 @@ commands = {
 	"D" : ISortDesc,
 	"e" : IEval,
 	"k" : ISwapCase,
+	"l" : ILowercase,
 	"o" : ISort,
 	"R" : IReplace,
 	"r" : IReverse,
