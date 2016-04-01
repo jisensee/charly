@@ -92,14 +92,12 @@ def handleVariable(stack, code, index):
 
 	
 def assignVariable(stack):
-	from helperFunctions import popArguments
 	modeList = [{
 			"types" : [Item, String],
 			"name" : "assignVariable"
 		},
 	]
-	
-	M, B, A = popArguments(stack, modeList, 2, unpack=False)
+	M, B, A = stack.popArguments(modeList, 2, unpack=False)
 	
 	# Assign the B to a variable named A and leaves the value of A on the stack
 	if M == "assignVariable":
@@ -107,7 +105,6 @@ def assignVariable(stack):
 			raise InvalidVariableNameException(A.value)
 		else:
 			variables[A.value] = B
-			
 			stack.push(B)
 
 

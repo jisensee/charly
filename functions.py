@@ -1,7 +1,7 @@
 import re
 
 from iposTypes import Item, String, Integer, Command
-from helperFunctions import popArguments, applyCommands, splitString, sortAscWithKey
+from helperFunctions import applyCommands, splitString, sortAscWithKey
 
 
 """
@@ -16,7 +16,7 @@ def IDuplicateTopStackItem(stack):
 			"name" : "duplicate"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1, unpack=False)
+	M, A = stack.popArguments(modeList, 1, unpack=False)
 	
 	# Duplicate the top item on the stack
 	if M == "duplicate":
@@ -29,7 +29,7 @@ def ICopyStackItem(stack):
 			"name" : "copy"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Copies the item at index A to the top of the stack
 	if M == "copy":
@@ -42,7 +42,7 @@ def ISwapTopStackItems(stack, unpack=False):
 			"name" : "swap"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2, unpack=False)
+	M, B, A = stack.popArguments(modeList, 2, unpack=False)
 	
 	# Swaps the position of A and B on the stack
 	if M == "swap":
@@ -55,7 +55,7 @@ def IRotateTopStack(stack, unpack=False):
 			"name" : "rotate"
 		},
 	]
-	M, C, B, A = popArguments(stack, modeList, 3, unpack=False)
+	M, C, B, A = stack.popArguments(modeList, 3, unpack=False)
 	
 	# Push C to the top and A and B down
 	if M == "rotate":
@@ -69,7 +69,7 @@ def IDiscardTopStackItem(stack):
 			"name" : "discard"
 		},
 	]
-	M = popArguments(stack, modeList, 1)[0]
+	M = stack.popArguments(modeList, 1)[0]
 	
 	# Top item already got popped, nothing to do
 	if M == "discard":
@@ -81,7 +81,7 @@ def IEval(stack):
 			"name" : "eval"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 
 	# Executes the numeric calculations in A and pushes the result as int
 	if M == "eval":		
@@ -105,7 +105,7 @@ def ISlice(stack):
 			"name" : "sliceIntInt"
 		},
 	]
-	K, C, B, A = popArguments(stack, modeList, 3)
+	K, C, B, A = stack.popArguments(modeList, 3)
 	
 	if K == "sliceIntInt":
 		result = C[B % len(C) : A % len(C)]	
@@ -118,7 +118,7 @@ def IReverse(stack):
 			"name" : "reverse"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Reverses A
 	if M == "reverse":
@@ -134,7 +134,7 @@ def IStrip(stack):
 			"name" : "stripInt"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# Remove leading and trailing  As from B
 	if M == "stripString":
@@ -152,7 +152,7 @@ def IWrap(stack):
 			"name" : "wrap"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Remove all newlines from A
 	if M == "wrap":		
@@ -165,7 +165,7 @@ def IReplace(stack):
 			"name" : "replace"
 		}, 
 	]
-	M, C, B, A = popArguments(stack, modeList, 3)
+	M, C, B, A = stack.popArguments(modeList, 3)
 	
 	# Replaces all occurences of a regex pattern B with A in C
 	if M == "replace":
@@ -179,7 +179,7 @@ def IMultiply(stack):
 			"name" : "multiply"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# Repeats every character in B A times
 	if M == "multiply":
@@ -194,7 +194,7 @@ def ISwapCase(stack):
 		},
 	]
 	
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	if M == "swapCase":
 		result = A.swapcase()
@@ -209,7 +209,7 @@ def IRemove(stack):
 			"name" : "removeEverNChar"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# Remove all characters in A from B
 	if M == "removeCharsFromStr":
@@ -230,7 +230,7 @@ def IConcatenate(stack):
 			"name" : "concatInts"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# B + A
 	if M == "concatStrings":
@@ -247,7 +247,7 @@ def IExecuteCommands(stack):
 		"name" : "executeCommands"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Execute the given commands using and manipulating the stack
 	if M == "executeCommands":
@@ -259,7 +259,7 @@ def IApplyToChars(stack):
 			"name" : "applyToChars",
 		}
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# Apply A to every character of B
 	if M == "applyToChars":
@@ -272,7 +272,7 @@ def IApplyToParts(stack):
 			"name" : "applyToParts",
 		}
 	]
-	M, C, B, A = popArguments(stack, modeList, 3)
+	M, C, B, A = stack.popArguments(modeList, 3)
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToParts":
@@ -286,7 +286,7 @@ def IApplyToPartsRandomly(stack):
 			"name" : "applyToPartsRandomly",
 		}
 	]
-	M, C, B, A = popArguments(stack, modeList, 3)
+	M, C, B, A = stack.popArguments(modeList, 3)
 	
 	# Apply A to every element of C.split(B)
 	if M == "applyToPartsRandomly":
@@ -300,7 +300,7 @@ def ISortAsc(stack):
 			"name" : "sort"
 		},
 	]
-	M, A, B = popArguments(stack, modeList, 2)
+	M, A, B = stack.popArguments(modeList, 2)
 	
 	# Split B on A, sort the substrings ascending and join back on B
 	if M == "sort":
@@ -314,7 +314,7 @@ def ISortAscWithKey(stack):
 			"name" : "sortAscWithKey"
 		},
 	]
-	M, C, B, A = popArguments(stack, modeList, 3)
+	M, C, B, A = stack.popArguments(modeList, 3)
 	
 	# Split C on B, sort parts ascending with key function A and join back on B
 	if M == "sortAscWithKey":
@@ -327,7 +327,7 @@ def ISortDesc(stack):
 			"name" : "sortDesc"
 		},
 	]
-	M, A, B = popArguments(stack, modeList, 2)
+	M, A, B = stack.popArguments(modeList, 2)
 	
 	# SPlit B on A, sort the substrings descending and join back on B
 	if M == "sortDesc":
@@ -341,7 +341,7 @@ def ISortDescWithKey(stack):
 			"name" : "sortDescWithKey"
 		},
 	]
-	M, C, B, A = popArguments(stack, modeList, 3)
+	M, C, B, A = stack.popArguments(modeList, 3)
 	
 	# Split C on B, sort parts descending with key function A and join back on B
 	if M == "sortDescWithKey":
@@ -354,7 +354,7 @@ def ISort(stack):
 			"name" : "sort"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	if M == "sort":
 		result = "".join(sorted(A))
@@ -366,7 +366,7 @@ def IUppercase(stack):
 			"name" : "uppercase"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Uppercase the string
 	if M == "uppercase":
@@ -379,7 +379,7 @@ def IFirstChars(stack):
 			"name" : "firstChars"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# Take the first A characters from B
 	if M == "firstChars":
@@ -392,7 +392,7 @@ def ILastChars(stack):
 			"name" : "lastChars"
 		},
 	]
-	M, B, A = popArguments(stack, modeList, 2)
+	M, B, A = stack.popArguments(modeList, 2)
 	
 	# Take the last A characters from B
 	if M == "lastChars":
@@ -405,7 +405,7 @@ def IFirstChar(stack):
 			"name" : "firstChar"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Take the first character from A
 	if M == "firstChar":
@@ -420,7 +420,7 @@ def ILastChar(stack):
 			"name" : "lastChar"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Take the last  character from A
 	if M == "lastChar":
@@ -435,7 +435,7 @@ def IAllButFirstChar(stack):
 			"name" : "allButFirstChar"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Take all but the first character from A
 	if M == "allButFirstChar":
@@ -450,7 +450,7 @@ def IAllButLastChar(stack):
 			"name" : "allButLastChar"
 		},
 	]
-	M, A = popArguments(stack, modeList, 1)
+	M, A = stack.popArguments(modeList, 1)
 	
 	# Take all but the last character from A
 	if M == "allButLastChar":
