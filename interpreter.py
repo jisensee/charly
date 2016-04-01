@@ -8,8 +8,10 @@ variables = {
 	"E" : String(""),
 	"L" : String("abcdefghijklmnopqrstuvwxyz"),
 	"N" : String("0123456789"),
+	"P" : String("."),
 	"S" : String(" "),
 	"T" : Integer(2),
+	"U" : String("_"),
 }
 
 def handleMultiCharLiteral(stack, code, index, literalType):
