@@ -17,6 +17,7 @@ commands = {
 	"R" : IReplace,
 	"r" : IReverse,
 	"s" : IStrip,
+	"u" : IUppercase,
 	"w" : IWrap,	
 	"*" : IMultiply,	
 	"-" : IRemove,
