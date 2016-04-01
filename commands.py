@@ -23,6 +23,12 @@ commands = {
 	"-" : IRemove,
 	"+" : IConcatenate,
 	":" : ISlice,
+	"<" : IFirstChars,
+	">" : ILastChars,
+	"h" : IFirstChar,
+	"v" : ILastChar,
+	"y" : IAllButFirstChar,
+	"z" : IAllButLastChar,
 	
 	# Functional programming
 	"#" : IExecuteCommands,

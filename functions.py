@@ -372,3 +372,89 @@ def IUppercase(stack):
 	if M == "uppercase":
 		result = A.upper()
 		stack.pushString(result)
+
+def IFirstChars(stack):
+	modeList = [{
+			"types" : [String, Integer],
+			"name" : "firstChars"
+		},
+	]
+	M, B, A = popArguments(stack, modeList, 2)
+	
+	# Take the first A characters from B
+	if M == "firstChars":
+		result = B[: A % len(B)]
+		stack.pushString(result)
+
+def ILastChars(stack):
+	modeList = [{
+			"types" : [String, Integer],
+			"name" : "lastChars"
+		},
+	]
+	M, B, A = popArguments(stack, modeList, 2)
+	
+	# Take the last A characters from B
+	if M == "lastChars":
+		result = B[A % len(B) : ]
+		stack.pushString(result)
+		
+def IFirstChar(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "firstChar"
+		},
+	]
+	M, A = popArguments(stack, modeList, 1)
+	
+	# Take the first character from A
+	if M == "firstChar":
+		# Push nothing if A is empty
+		if len(A) > 0:
+			result = A[0]
+			stack.pushString(result)
+		
+def ILastChar(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "lastChar"
+		},
+	]
+	M, A = popArguments(stack, modeList, 1)
+	
+	# Take the last  character from A
+	if M == "lastChar":
+		# Push nothing if A is empty
+		if len(A) > 0:
+			result = A[-1]
+			stack.pushString(result)
+			
+def IAllButFirstChar(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "allButFirstChar"
+		},
+	]
+	M, A = popArguments(stack, modeList, 1)
+	
+	# Take all but the first character from A
+	if M == "allButFirstChar":
+		# Push nothing if A has only one character
+		if len(A) > 1:
+			result = A[1:]
+			stack.pushString(result)
+		
+def IAllButLastChar(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "allButLastChar"
+		},
+	]
+	M, A = popArguments(stack, modeList, 1)
+	
+	# Take all but the last character from A
+	if M == "allButLastChar":
+		# Push nothing if A has only one character
+		if len(A) > 1:
+			result = A[:-1]
+			stack.pushString(result)
