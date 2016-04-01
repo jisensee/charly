@@ -364,7 +364,7 @@ def ISort(stack):
 		result = "".join(sorted(A))
 		stack.pushString(result)
 		
-def IUppercase(stack):
+def IUpperCase(stack):
 	modeList = [{
 			"types" : [String],
 			"name" : "uppercase"
@@ -377,7 +377,7 @@ def IUppercase(stack):
 		result = A.upper()
 		stack.pushString(result)
 
-def ILowercase(stack):
+def ILowerCase(stack):
 	modeList = [{
 			"types" : [String],
 			"name" : "lowercase"
