@@ -4,7 +4,7 @@ from iposTypes import Integer, String, Command, Item
 
 
 variables = {
-	"B" : "\n",
+	"B" : String("\n"),
 	"E" : String(""),
 	"L" : String("abcdefghijklmnopqrstuvwxyz"),
 	"N" : String("0123456789"),
