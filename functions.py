@@ -86,7 +86,7 @@ def IEval(stack):
 	# Executes the numeric calculations in A and pushes the result as int
 	if M == "eval":		
 		# only keep chars for numeric calculations 
-		allowedChars = "1234567890+-/*"
+		allowedChars = "1234567890+-/*()"
 		result = "".join([c for c in A if c in allowedChars])
 		
 		# remove leading zeros in number literals
