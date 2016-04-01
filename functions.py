@@ -2,6 +2,7 @@ import re
 
 from iposTypes import Item, String, Integer, Command
 from helperFunctions import applyCommands, splitString, sortAscWithKey
+from errors import InvalidEvalStringException
 
 
 """
@@ -93,9 +94,12 @@ def IEval(stack):
 		result = re.sub(r"0+(\d+)", r"\1", result)
 		
 		# Replace float through integer division
-		result = re.sub(r"[^/]/[^/]", "//", result)
+		result = re.sub(r"([^/])/([^/])", "\\1//\\2", result)
 		
-		result = eval(result)
+		try:
+			result = eval(result)
+		except SyntaxError:
+			raise InvalidEvalStringException(result)
 		
 		stack.pushString(result)
 
