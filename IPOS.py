@@ -28,7 +28,7 @@ if __name__ == "__main__":
 		# Join the stack into one string
 		result = stack.join()
 		
-		print(result)
+		print(result, end="")
 		
 	except IposException as e:
 		print("ERROR: %s" % e.message)
