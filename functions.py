@@ -433,7 +433,10 @@ def IFirstChar(stack):
 	modeList = [{
 			"types" : [String],
 			"name" : "firstChar"
-		},
+		}, {
+			"types" : [Integer],
+			"name" : "incrementInt"
+		}
 	]
 	M, A = stack.popArguments(modeList, 1)
 	
@@ -443,12 +446,20 @@ def IFirstChar(stack):
 		if len(A) > 0:
 			result = A[0]
 			stack.pushString(result)
+	
+	# Increment A
+	elif M == "incrementInt":
+		result = A + 1
+		stack.pushInteger(result)
 		
 def ILastChar(stack):
 	modeList = [{
 			"types" : [String],
 			"name" : "lastChar"
-		},
+		}, {
+			"types" : [Integer],
+			"name" : "decrementInt"
+		}
 	]
 	M, A = stack.popArguments(modeList, 1)
 	
@@ -458,6 +469,11 @@ def ILastChar(stack):
 		if len(A) > 0:
 			result = A[-1]
 			stack.pushString(result)
+			
+	# Decrement A
+	elif M == "decrementInt":
+		result = A - 1
+		stack.pushInteger(result)
 			
 def IAllButFirstChar(stack):
 	modeList = [{
