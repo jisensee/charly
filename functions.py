@@ -413,8 +413,9 @@ def IFirstChars(stack):
 	
 	# Take the first A characters from B
 	if M == "firstChars":
-		result = B[: A % len(B)]
-		stack.pushString(result)
+		if len(B) > 0:
+			result = B[: A % len(B)]
+			stack.pushString(result)
 
 def ILastChars(stack):
 	modeList = [{
@@ -426,8 +427,9 @@ def ILastChars(stack):
 	
 	# Take the last A characters from B
 	if M == "lastChars":
-		result = B[A % len(B) : ]
-		stack.pushString(result)
+		if len(B) > 0:
+			result = B[len(B) - A % len(B) : ]
+			stack.pushString(result)
 		
 def IFirstChar(stack):
 	modeList = [{
