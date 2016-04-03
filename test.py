@@ -102,7 +102,42 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(r""" "1"u"""), "1")
         self.assertEqual(runCode(r""" "1aBc#Zx"u"""), "1ABC#ZX")
         with self.assertRaises(InvalidStackContentsException): runCode("""u""")
-        with self.assertRaises(InvalidStackContentsException): runCode("""2u""")    
+        with self.assertRaises(InvalidStackContentsException): runCode("""2u""")
+        
+    def testIReverse(self):
+        self.assertEqual(runCode(r""" "abc"r"""), "cba")
+        self.assertEqual(runCode(r""" "A"r"""), "A")
+        with self.assertRaises(InvalidStackContentsException): runCode("""r""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1r""")
+        
+    def testIFirstChar(self):
+        self.assertEqual(runCode(r""" "abc"h"""), "a")
+        self.assertEqual(runCode(r"""Er"""), "")
+        self.assertEqual(runCode(r"""1h"""), "2")
+        with self.assertRaises(InvalidStackContentsException): runCode("""h""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""!rh""")
+        
+    def testILastChar(self):
+        self.assertEqual(runCode(r""" "abc"v"""), "c")
+        self.assertEqual(runCode(r"""Ev"""), "")
+        self.assertEqual(runCode(r"""2v"""), "1")
+        with self.assertRaises(InvalidStackContentsException): runCode("""v""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""!rv""")
+        
+    def testIFirstChars(self):
+        self.assertEqual(runCode(r""" "abc"2<"""), "ab")
+        self.assertEqual(runCode(r"""E2<"""), "")
+        self.assertEqual(runCode(r""" "abc"4< """), "a")
+        with self.assertRaises(InvalidStackContentsException): runCode("""<""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""!1>""")
+        
+    def testILastChars(self):
+        self.assertEqual(runCode(r""" "abc"2>"""), "bc")
+        self.assertEqual(runCode(r"""E2<"""), "")
+        self.assertEqual(runCode(r""" "abc"4> """), "c")
+        with self.assertRaises(InvalidStackContentsException): runCode(""">""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""!1>""")
+        
         
 if __name__ == "__main__":
     unittest.main()
