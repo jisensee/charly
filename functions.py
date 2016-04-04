@@ -222,7 +222,10 @@ def IRemove(stack):
 		
 	# Remove every Ath char from B
 	elif M == "removeEverNChar":
-		result = "".join(map(lambda t: t[1], filter(lambda t: t[0] % A != 0, enumerate(B))))
+		if A != 0:
+			result = "".join(map(lambda t: t[1], filter(lambda t: t[0] % A != 0, enumerate(B))))
+		else:
+			result = B
 		stack.pushString(result)
 	
 def IRemoveWithRegex(stack):
