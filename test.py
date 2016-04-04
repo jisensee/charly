@@ -73,6 +73,13 @@ class Test(unittest.TestCase):
         with self.assertRaises(InvalidStackContentsException): runCode("""D""")
         with self.assertRaises(InvalidStackContentsException): runCode("""1 2 !aD""")
         
+    def testISort(self):
+        self.assertEqual(runCode(r""" "uk jXs2d1AN"o"""), " 12ANXdjksu")
+        self.assertEqual(runCode(r""" "u"o"""), "u")
+        self.assertEqual(runCode(r""" Eo"""), "")
+        with self.assertRaises(InvalidStackContentsException): runCode("""o""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1 2o""")
+        
     def testIEval(self):
         self.assertEqual(runCode(r""" "1"e"""), "1")
         self.assertEqual(runCode(r""" "1+1"e"""), "2")
@@ -137,6 +144,53 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(r""" "abc"4> """), "c")
         with self.assertRaises(InvalidStackContentsException): runCode(""">""")
         with self.assertRaises(InvalidStackContentsException): runCode("""!1>""")
+        
+    def testIAllButFirstChar(self):
+        self.assertEqual(runCode(r""" "abc"y"""), "bc")
+        self.assertEqual(runCode(r""" "a"y"""), "")
+        with self.assertRaises(InvalidStackContentsException): runCode("""y""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1y""")
+        
+    def testIAllButLastChar(self):
+        self.assertEqual(runCode(r""" "abc"z"""), "ab")
+        self.assertEqual(runCode(r""" "a"z"""), "")
+        with self.assertRaises(InvalidStackContentsException): runCode("""z""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1z""")
+        
+    def testIWrap(self):
+        self.assertEqual(runCode(r""" "a\n\nds\nasd"w"""), "adsasd")
+        self.assertEqual(runCode(r""" "\n"w"""), "")
+        self.assertEqual(runCode(r""" " \n "w"""), "  ")
+        with self.assertRaises(InvalidStackContentsException): runCode("""w""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1w""")
+        
+    def testIStrip(self):
+        self.assertEqual(runCode(r"""  "abcdefabc" "abc"s"""), "def")
+        self.assertEqual(runCode(r""" "abc"'as  """), "bc")
+        self.assertEqual(runCode(r""" "abc""def"s"""), "abc")        
+        self.assertEqual(runCode(r""" "abcefgh"2s"""), "cef")
+        self.assertEqual(runCode(r""" "abcefgh"0s"""), "abcefgh")
+        with self.assertRaises(InvalidStackContentsException): runCode("""s""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1s""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""!v1s""")
+        
+    def testIMultiply(self):
+        self.assertEqual(runCode(r""" "abcd"2*"""), "aabbccdd")
+        self.assertEqual(runCode(r""" "abc"0*"""), "")
+        self.assertEqual(runCode(r""" E2*"""), "")
+        with self.assertRaises(InvalidStackContentsException): runCode("""*""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""`abc`1*""")
+        
+    def testIRemove(self):
+        self.assertEqual(runCode(r""" "abcdef""cde"-"""), "abf")
+        self.assertEqual(runCode(r""" "abcdef"E-"""), "abcdef")
+        self.assertEqual(runCode(r""" "abc def""ghijkl"-"""), "abc def")
+        self.assertEqual(runCode(r""" "abcdef"2-"""), "bdf")
+        self.assertEqual(runCode(r""" "abcdef"1-"""), "")
+        self.assertEqual(runCode(r""" "abcf"0-"""), "abcf")
+        
+        with self.assertRaises(InvalidStackContentsException): runCode("""-""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1 1-""")
         
         
 if __name__ == "__main__":

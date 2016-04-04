@@ -10,18 +10,18 @@ commands = {
 	"h" : IFirstChar,#
 	"k" : ISwapCase,#
 	"l" : ILowerCase,#
-	"o" : ISort,
+	"o" : ISort,#
 	"R" : IReplace,
 	"r" : IReverse,#
 	"s" : IStrip,
 	"u" : IUpperCase,#
 	"v" : ILastChar,#
-	"w" : IWrap,
+	"w" : IWrap,#
 	"x" : IRemoveWithRegex,
-	"y" : IAllButFirstChar,
-	"z" : IAllButLastChar,
-	"*" : IMultiply,
-	"-" : IRemove,
+	"y" : IAllButFirstChar,#
+	"z" : IAllButLastChar,#
+	"*" : IMultiply,#
+	"-" : IRemove,#
 	"+" : IConcatenate,
 	":" : ISlice,
 	"<" : IFirstChars,#
