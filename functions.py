@@ -147,7 +147,7 @@ def IStrip(stack):
 		
 	# Remove A leading and trailing chars from B
 	elif M == "stripInt":
-		result = B[A : -A]
+		result = B[A :][::-1][A :][::-1]
 		stack.pushString(result)
 	
 def IWrap(stack):
