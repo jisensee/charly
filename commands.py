@@ -4,6 +4,7 @@ from functions import *
 commands = {
 	"A" : ISortAsc,#
 	"a" : ISortAscWithKey,
+	"c" : ICountOccurences,
 	"D" : ISortDesc,#
 	"d" : ISortDescWithKey,
 	"e" : IEval,#

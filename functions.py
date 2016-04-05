@@ -509,3 +509,16 @@ def IAllButLastChar(stack):
 		if len(A) > 1:
 			result = A[:-1]
 			stack.pushString(result)
+
+def ICountOccurences(stack):
+	modeList = [{
+			"types" : [String, String],
+			"name" : "countOccurences"
+		},
+	]
+	M, B, A = stack.popArguments(modeList, 2)
+	
+	if M == "countOccurences":
+		result = len(re.findall(A, B))
+		stack.pushInteger(result)
+	

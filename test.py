@@ -214,6 +214,14 @@ class Test(unittest.TestCase):
         with self.assertRaises(InvalidStackContentsException): runCode("""1?""")
         with self.assertRaises(InvalidStackContentsException): runCode("""?""")
     
+    def testICountOccurences(self):
+        self.assertEqual(runCode(r""" "aBca"'ac"""), "2")
+        self.assertEqual(runCode(r""" "aBca""ab"c"""), "0")
+        self.assertEqual(runCode(r""" "aBcacadca""ca"c"""), "3")
+        self.assertEqual(runCode(r""" "aBca2c21adca""\d"c"""), "3")
+        self.assertEqual(runCode(r""" "abcdabcd"`"ab"-`~ """), "cdcd")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1c""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""c""")
         
 if __name__ == "__main__":
     unittest.main()
