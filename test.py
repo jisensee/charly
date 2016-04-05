@@ -73,6 +73,18 @@ class Test(unittest.TestCase):
         with self.assertRaises(InvalidStackContentsException): runCode("""D""")
         with self.assertRaises(InvalidStackContentsException): runCode("""1 2 !aD""")
         
+    def testSortAscWithKey(self):
+        self.assertEqual(runCode(r""" "abcaa.Deaaf.123a.aB."'.`'ac`a"""), ".123a.aB.Deaaf.abcaa")
+        self.assertEqual(runCode(r""" "abcaa.Deaaf.123a.aB."'.`'a-`a"""), ".aB.abcaa.Deaaf.123a")
+        with self.assertRaises(InvalidStackContentsException): runCode("""a""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1 2 !aa""")
+        
+    def testSortDescWithKey(self):
+        self.assertEqual(runCode(r""" "abcaa.Deaaf.123a.aB."'.`'ac`d"""), "abcaa.Deaaf.123a.aB.")
+        self.assertEqual(runCode(r""" "abcaa.Deaaf.123a.aB."'.`'a-`d"""), "123a.Deaaf.abcaa.aB.")
+        with self.assertRaises(InvalidStackContentsException): runCode("""d""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1 2 !ad""")
+        
     def testISort(self):
         self.assertEqual(runCode(r""" "uk jXs2d1AN"o"""), " 12ANXdjksu")
         self.assertEqual(runCode(r""" "u"o"""), "u")
@@ -222,6 +234,35 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(r""" "abcdabcd"`"ab"-`~ """), "cdcd")
         with self.assertRaises(InvalidStackContentsException): runCode("""1c""")
         with self.assertRaises(InvalidStackContentsException): runCode("""c""")
+        
+    def testISlice(self):
+        self.assertEqual(runCode(r""" "aBca"1 7:"""), "Bc")
+        self.assertEqual(runCode(r""" "aBca"0 5:"""), "a")
+        self.assertEqual(runCode(r""" "aBca"3 2:"""), "")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1'a:""")
+        with self.assertRaises(InvalidStackContentsException): runCode(""":""")
+        
+    def testIConcatenate(self):
+        self.assertEqual(runCode(r""" "abc"'D+"""), "abcD")
+        self.assertEqual(runCode(r""" E'D+"""), "D")
+        self.assertEqual(runCode(r""" 12 1+"""), "121")
+        with self.assertRaises(InvalidStackContentsException): runCode("""+""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1+""")
+        
+    def testIReplace(self):
+        self.assertEqual(runCode(r""" "ab.cd.ab.c"".c"'XR """), "abXd.abX")
+        self.assertEqual(runCode(r""" "ab.cd.ab.c"".c"ER """), "abd.ab")
+        self.assertEqual(runCode(r""" "defghi""abc"ER """), "defghi")
+        self.assertEqual(runCode(r""" "ab2cd12ef""(\d)""\1X"R """), "ab2Xcd1X2Xef")
+        with self.assertRaises(InvalidStackContentsException): runCode("""R""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1R""")
+        
+    def testIRemoveWithRegex(self):
+        self.assertEqual(runCode(r""" "ab.cd.ab.c"".c"x """), "abd.ab")
+        self.assertEqual(runCode(r""" "defghi""abc"x """), "defghi")
+        self.assertEqual(runCode(r""" "ab2cd12ef""(\d)"x """), "abcdef")
+        with self.assertRaises(InvalidStackContentsException): runCode("""x""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1x""")
         
 if __name__ == "__main__":
     unittest.main()
