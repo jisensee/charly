@@ -264,5 +264,10 @@ class Test(unittest.TestCase):
         with self.assertRaises(InvalidStackContentsException): runCode("""x""")
         with self.assertRaises(InvalidStackContentsException): runCode("""1x""")
         
+    def testILength(self):
+        self.assertEqual(runCode(r""" "abcde"t """), "5")
+        self.assertEqual(runCode(r""" Et """), "0")
+        with self.assertRaises(InvalidStackContentsException): runCode("""t""")
+        
 if __name__ == "__main__":
     unittest.main()

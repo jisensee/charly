@@ -521,4 +521,15 @@ def ICountOccurences(stack):
 	if M == "countOccurences":
 		result = len(re.findall(A, B))
 		stack.pushInteger(result)
+
+def ILength(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "length"
+		},
+	]
+	M, A = stack.popArguments(modeList, 1)
 	
+	if M == "length":
+		result = len(A)
+		stack.pushInteger(result)
