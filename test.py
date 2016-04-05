@@ -1,7 +1,9 @@
+# endcoding: utf-8
+
 import unittest
 from interpreter import run
 from stack import Stack
-from errors import InvalidStackContentsException, InvalidVariableNameException, InvalidEvalStringException
+from errors import *
 
 
 def runCode(code):
@@ -23,7 +25,13 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(r"""'a!r1"abc"3"""), "ar1abc3")
         self.assertEqual(runCode(r"""1"abc""abc" 'a2`def`"ghi"""), "1abcabca2defghi")
         self.assertEqual(runCode(r"""  "abc"'a`def """), "abcadef ")
+        with self.assertRaises(MissingCharacterException): runCode(""" '""")
              
+    def testDoubleString(self):
+        self.assertEqual(runCode(r""" ´abc´def´E"""), "abcdef")
+        self.assertEqual(runCode(r""" ´abc´def´´ghi´klm´1'a"""), "abcdefghiklm1a")
+        self.assertEqual(runCode(r""" ´´def´´ghi´klm´1'a"""), "defghiklm1a")
+        with self.assertRaises(MissingDoubleStringQuoteException): runCode(""" ´abc""")
      
     def testVariableAssignment(self):
         self.assertEqual(runCode(r"""1'X=X"""), "11")

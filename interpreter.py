@@ -1,5 +1,7 @@
+# endcoding: utf-8
+
 from commands import commands
-from errors import CommandNotExistingException, MissingCharacterException, InvalidVariableNameException
+from errors import CommandNotExistingException, MissingCharacterException, InvalidVariableNameException, MissingDoubleStringQuoteException
 from iposTypes import Integer, String, Command, Item
 
 
@@ -51,6 +53,32 @@ def handleSingleCharLiteral(stack, code, index, literalType):
 		raise MissingCharacterException(index + 1)
 		
 	return index
+
+def handleDoubleStringLiteral(stack, code, index):
+	"""
+	Pushes the two string literals given by the doubstring starting at the given index.
+	Returns the index of the first character after the multistring.
+	"""
+	secondQuote = code.find("´", index + 1)
+	
+	if secondQuote == -1:
+		raise MissingDoubleStringQuoteException(index)
+	
+	# Push first string
+	stack.pushString(code[index + 1 : secondQuote])
+	
+	# Find the last quote of the doublestring
+	thirdQuote = code.find("´", secondQuote + 1)
+	
+	# If not found, 2nd string contains rest of the code
+	if thirdQuote == -1:
+		stack.pushString(code[secondQuote +1 :])
+		return len(code)
+	
+	# If found, 2nd string contains chars until 3rd quote
+	else:
+		stack.pushString(code[secondQuote + 1 : thirdQuote])
+		return thirdQuote + 1
 
 def handleIntegerLiteral(stack, code, index):
 	"""
@@ -163,6 +191,10 @@ def run(code, stack):
 		elif code[i] == "=":
 			assignVariable(stack)
 			i += 1
+			
+		# Push the two strings given by a doublestring literal
+		elif code[i] == "´":
+			i = handleDoubleStringLiteral(stack, code, i)
 		
 		# Current char is a command
 		else:

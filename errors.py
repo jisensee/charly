@@ -29,3 +29,7 @@ class InvalidVariableNameException(IposException):
 class InvalidEvalStringException(IposException):
 	def __init__(self, evalString):
 		self.message = "The string '%s' can't be evaluated because of a syntax error!" % evalString
+		
+class MissingDoubleStringQuoteException(IposException):
+	def __init__(self, index):
+		self.message = "The double string starting at position %s is missing the second quote!" % index
