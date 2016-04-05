@@ -187,11 +187,33 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(r""" "abc def""ghijkl"-"""), "abc def")
         self.assertEqual(runCode(r""" "abcdef"2-"""), "bdf")
         self.assertEqual(runCode(r""" "abcdef"1-"""), "")
-        self.assertEqual(runCode(r""" "abcf"0-"""), "abcf")
-        
+        self.assertEqual(runCode(r""" "abcf"0-"""), "abcf")        
         with self.assertRaises(InvalidStackContentsException): runCode("""-""")
         with self.assertRaises(InvalidStackContentsException): runCode("""1 1-""")
         
+    def testIExecuteCommands(self):
+        self.assertEqual(runCode(r""" "abc"!r# """), "cba")
+        self.assertEqual(runCode(r""" "abc"`rh`# """), "c")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1#""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""#""")
+        
+    def testIApplyToChars(self):
+        self.assertEqual(runCode(r""" "aBc"!k~ """), "AbC")
+        self.assertEqual(runCode(r""" "abcdabcd"`"ab"-`~ """), "cdcd")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1~""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""~""")
+    
+    def testIApplyToParts(self):
+        self.assertEqual(runCode(r""" "abc.def.ghi"'.!r% """), "cba.fed.ihg")
+        self.assertEqual(runCode(r""" "abc.def.ghi."'.!r% """), "cba.fed.ihg.")
+        self.assertEqual(runCode(r""" "abc.-def.-ghi"".-"`rh`% """), "c.-f.-i")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1%""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""%""")
+    
+    def testIApplyToPartsRandomly(self):
+        with self.assertRaises(InvalidStackContentsException): runCode("""1?""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""?""")
+    
         
 if __name__ == "__main__":
     unittest.main()

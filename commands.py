@@ -13,7 +13,7 @@ commands = {
 	"o" : ISort,#
 	"R" : IReplace,
 	"r" : IReverse,#
-	"s" : IStrip,
+	"s" : IStrip,#
 	"u" : IUpperCase,#
 	"v" : ILastChar,#
 	"w" : IWrap,#
@@ -31,8 +31,8 @@ commands = {
 	"/" : ISwapTopStackItems,#
 	"$" : ICopyStackItem,#
 	"@" : IRotateTopStack,#
-	"#" : IExecuteCommands,
-	"~" : IApplyToChars,
-	"%" : IApplyToParts,
-	"?" : IApplyToPartsRandomly,	
+	"#" : IExecuteCommands,#
+	"~" : IApplyToChars,#
+	"%" : IApplyToParts,#
+	"?" : IApplyToPartsRandomly,#
 }
