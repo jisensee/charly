@@ -22,9 +22,10 @@ if __name__ == "__main__":
 	elif args.s:
 		input_ = "".join(sys.stdin.readlines())
 	
-	# Convert input to unix style newlines
+	# Convert input to unix style newlines and push it to the stack
 	if input_:
 		input_ = "".join(filter(lambda c: c != "\r", input_))
+		stack.pushString(input_)
 	
 	try:
 		# Run the code
