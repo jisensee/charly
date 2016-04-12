@@ -16,10 +16,15 @@ if __name__ == "__main__":
 	
 	stack = Stack()
 	
+	input_ = None
 	if args.input:
-		stack.pushString(args.input)
+		input_ = args.input
 	elif args.s:
-		stack.pushString("".join(sys.stdin.readlines()))
+		input_ = "".join(sys.stdin.readlines())
+	
+	# Convert input to unix style newlines
+	if input_:
+		input_ = "".join(filter(lambda c: c != "\r", input_))
 	
 	try:
 		# Run the code
