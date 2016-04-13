@@ -27,6 +27,10 @@ class Stack:
 		"""Push a command to the stack"""
 		self.content.append(Command(command))
 
+	def getContents(self):
+		"""Returns a list of the string representaions of the stack contents"""
+		return [str(i.value) for i in self.content]
+
 	def push(self, item):
 		"""
 		Push the item as it is to the stack.
@@ -73,6 +77,10 @@ class Stack:
 	def getItem(self, index):
 		"""Returns the item at the given index."""
 		return self.content[index]
+
+	def clear(self):
+		"""Clears the stack"""
+		self.content = []
 
 	def getTopItems(self, count):
 		"""

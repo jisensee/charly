@@ -277,5 +277,22 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(r""" Et """), "0")
         with self.assertRaises(InvalidStackContentsException): runCode("""t""")
         
+    def testIJoin(self):
+        self.assertEqual(runCode(r""" ´ab´cd´"efg""XYZ"j """), "abXYZcdXYZefg")
+        self.assertEqual(runCode(r""" "abc"Ej """), "abc")
+        self.assertEqual(runCode(r""" ´ab´cd´"efg"2j"XYZ"j """), "abXYZcdefg")
+        with self.assertRaises(InvalidStackContentsException): runCode("""j""")
+        
+    def testISplit(self):
+        self.assertEqual(runCode(r""" "abXYcXYXYdefg""XY"CSj """), "ab c defg")
+        self.assertEqual(runCode(r""" "12345678"3CSj """), "123 456 78")
+        self.assertEqual(runCode(r""" "12345678"0CSj """), "12345678")
+        self.assertEqual(runCode(r""" 5"12345678"CSj """), "12 34 56 7 8")
+        self.assertEqual(runCode(r""" 0"12345678"CSj """), "12345678")
+        self.assertEqual(runCode(""" "abc\ndefg\nhijkl"!tC """), "345")
+        self.assertEqual(runCode(""" "abc\n"!tC """), "3")
+        with self.assertRaises(InvalidStackContentsException): runCode("""C""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1 2C""")
+        
 if __name__ == "__main__":
     unittest.main()

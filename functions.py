@@ -533,3 +533,81 @@ def ILength(stack):
 	if M == "length":
 		result = len(A)
 		stack.pushInteger(result)
+		
+def ISplit(stack):
+	modeList = [{
+			"types" : [String, String],
+			"name" : "splitByString"
+		}, {
+			"types" : [String, Integer],
+			"name" : "splitByLength"
+		}, {
+			"types" : [Integer, String],
+			"name" : "splitByAmount"
+		}, {
+			"types" : [String, Command],
+			"name" : "splitByNewlines"
+		},
+	]
+	M, B, A = stack.popArguments(modeList, 2)
+	
+	# Split A on B
+	if M == "splitByString":
+		result = re.split(A, B)
+		for s in result:
+			if s:
+				stack.pushString(s)
+				
+	# Split B into parts of length A			
+	elif M == "splitByLength":
+		if A != 0:
+			parts = [B[i : i+A] for i in range(0, len(B), A)]
+			for part in parts:
+				stack.pushString(part)
+		else:
+			stack.pushString(B)
+				
+	# Split A into B parts
+	elif M == "splitByAmount":
+		if B != 0:
+			m = len(A) // B
+			r = len(A) % B
+			begin = 0
+			end = m + (r > 0)
+			
+			for i in range(B):
+				stack.pushString(A[begin : end])
+				begin = end
+				end += m + (i + 1 < r)
+		else:
+			stack.pushString(A)
+	
+	# Split B on newlines and apply A
+	elif M == "splitByNewlines":
+		for line in B.splitlines():
+			if line:
+				stack.pushString(applyCommands(A, line))
+	
+def IJoin(stack):
+	modeList = [{
+			"types" : [String],
+			"name" : "joinOnString"
+		}, {
+			"types" : [Integer],
+			"name" : "joinTop"
+		},
+	]
+	M, A = stack.popArguments(modeList, 1)
+	
+	# Join stack on A
+	if M == "joinOnString":
+		result = A.join(stack.getContents())
+		stack.clear()
+		stack.pushString(result)
+		
+	# Join the top A elements of the stack into one string
+	if M == "joinTop":
+		result = "".join([e.value for e in stack.getTopItems(A)])
+		for _ in range(A): stack.pop()
+		stack.pushString(result)
+		
