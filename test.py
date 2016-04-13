@@ -293,6 +293,15 @@ class Test(unittest.TestCase):
         self.assertEqual(runCode(""" "abc\n"!tC """), "3")
         with self.assertRaises(InvalidStackContentsException): runCode("""C""")
         with self.assertRaises(InvalidStackContentsException): runCode("""1 2C""")
+    
+    def testIInsert(self):
+        self.assertEqual(runCode(r""" ´abc´def´1i """), "abdefc")
+        self.assertEqual(runCode(r""" ´abc´def´3i """), "adefbc")
+        self.assertEqual(runCode(r""" "abc"1"def"i """), "adefbdefcdef")
+        self.assertEqual(runCode(r""" "abc"3"def"i """), "abcdef")
+        self.assertEqual(runCode(r""" "abc"6"def"i """), "abc")
+        with self.assertRaises(InvalidStackContentsException): runCode("""i""")
+        with self.assertRaises(InvalidStackContentsException): runCode("""1 1i""")
         
 if __name__ == "__main__":
     unittest.main()

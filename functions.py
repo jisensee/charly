@@ -611,3 +611,27 @@ def IJoin(stack):
 		for _ in range(A): stack.pop()
 		stack.pushString(result)
 		
+def IInsert(stack):
+	modeList = [{
+			"types" : [String, String, Integer],
+			"name" : "insertAt"
+		}, {
+			"types" : [String, Integer, String],
+			"name" : "insertPeriodic"
+		},
+	]
+	M, C, B, A = stack.popArguments(modeList, 3)
+	
+	# Insert B into C after index A
+	if M == "insertAt":
+		index = A % len(C) + 1
+		result = C[: index] + B + C[index :]
+		stack.pushString(result)
+		
+	# Insert A after every Bth character in C
+	elif M == "insertPeriodic":
+		if B <= len(C):
+			result = "".join([C[i : i+B] + A for i in range(0, len(C), B)])
+			stack.pushString(result)
+		else:
+			stack.pushString(C)

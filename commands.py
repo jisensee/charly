@@ -9,6 +9,7 @@ commands = {
 	"d" : ISortDescWithKey,
 	"e" : IEval,
 	"h" : IFirstChar,
+	"i" : IInsert,
 	"j" : IJoin,
 	"k" : ISwapCase,
 	"l" : ILowerCase,
