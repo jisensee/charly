@@ -24,7 +24,7 @@ commands = {
 	"x" : IRemoveWithRegex,
 	"y" : IAllButFirstChar,
 	"z" : IAllButLastChar,
-	"*" : IMultiply,
+	"*" : IRepeat,
 	"-" : IRemove,
 	"+" : IConcatenate,
 	":" : ISlice,

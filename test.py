@@ -194,8 +194,11 @@ class Test(unittest.TestCase):
         with self.assertRaises(InvalidStackContentsException): runCode("""1s""")
         with self.assertRaises(InvalidStackContentsException): runCode("""!v1s""")
         
-    def testIMultiply(self):
-        self.assertEqual(runCode(r""" "abcd"2*"""), "aabbccdd")
+    def testIRepeat(self):
+        self.assertEqual(runCode(r""" 2"abcd"*"""), "aabbccdd")
+        self.assertEqual(runCode(r""" 0"abc"*"""), "")
+        self.assertEqual(runCode(r""" 2E*"""), "")
+        self.assertEqual(runCode(r""" "abcd"2*"""), "abcdabcd")
         self.assertEqual(runCode(r""" "abc"0*"""), "")
         self.assertEqual(runCode(r""" E2*"""), "")
         with self.assertRaises(InvalidStackContentsException): runCode("""*""")

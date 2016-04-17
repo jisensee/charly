@@ -97,11 +97,11 @@ def IEval(stack):
 		result = re.sub(r"([^/])/([^/])", "\\1//\\2", result)
 		
 		try:
-			result = eval(result)
+			result = int(eval(result))
 		except SyntaxError:
 			raise InvalidEvalStringException(result)
 		
-		stack.pushString(result)
+		stack.pushInteger(result)
 
 def ISlice(stack):
 	modeList = [{
@@ -176,18 +176,26 @@ def IReplace(stack):
 		result = re.sub(B, A, C)
 		stack.pushString(result)
 		
-def IMultiply(stack):
+def IRepeat(stack):
 	
 	modeList = [{
 			"types" : [String, Integer],
-			"name" : "multiply"
+			"name" : "repeatString"
+		}, {
+			"types" : [Integer, String],
+			"name" : "repeatChars"
 		},
 	]
 	M, B, A = stack.popArguments(modeList, 2)
 	
-	# Repeats every character in B A times
-	if M == "multiply":
-		result = "".join([c*A for c in B])	
+	# Repeat B A times
+	if M == "repeatString":
+		result = B * A
+		stack.pushString(result)
+	
+	# Repeats every character in A B times
+	elif M == "repeatChars":
+		result = "".join([c*B for c in A])	
 		stack.pushString(result)
 
 def ISwapCase(stack):
