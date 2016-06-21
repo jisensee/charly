@@ -1,3 +1,5 @@
+# coding: utf-8
+
 from functions import *
 
 commands = {
@@ -24,6 +26,8 @@ commands = {
 	"x" : IRemoveWithRegex,
 	"y" : IAllButFirstChar,
 	"z" : IAllButLastChar,
+	"ß" : ISplatArray,
+	"§" : IWrapInArray,
 	"*" : IRepeat,
 	"-" : IRemove,
 	"+" : IConcatenate,

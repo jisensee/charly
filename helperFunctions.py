@@ -1,4 +1,4 @@
-import random
+﻿import random
 
 from iposTypes import String
 from stack import Stack
@@ -6,7 +6,7 @@ from stack import Stack
 def applyCommands(commands, inputStr, rand = False):
     """
     Helper function for the map commands.
-    Executes the given commands with the given input-string and returns the joined stack.
+    Executes the given commands with the given input-string and returns the stack
     If random is True, then the commands only get executed with a 50% chance.
     """
     from interpreter import run
@@ -14,12 +14,9 @@ def applyCommands(commands, inputStr, rand = False):
     stack = Stack([String(inputStr)])
     
     if rand and random.choice([0, 1]) or not rand:
-        result = run(commands, stack).join()
-    else:
-        result = stack.join()
+        run(commands, stack)
     
-
-    return result
+    return stack
 
 def splitString(separator, s):
     """Splits s on separator. Also works for empty separators which then returns all characters of s"""
@@ -34,12 +31,11 @@ def sortAscWithKey(toSort, separator, keyCommand, reverse = False):
     the parts ascending based on this and joins the parts back on the separator.
     If reverse is true, the sorting is descending.
     Returns the sorted string.
-    
     """
     splittedStr = splitString(separator, toSort)
         
     # Apply  mapping function to all substrings
-    mappingStrings = map(lambda c: applyCommands(keyCommand, c), splittedStr)
+    mappingStrings = map(lambda c: applyCommands(keyCommand, c).join(), splittedStr)
     
     def getKey(mappingString):
         """Map a mapping string to its key value"""

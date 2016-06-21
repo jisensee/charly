@@ -1,16 +1,33 @@
-import re
-
-from iposTypes import Item, String, Integer, Command
-from helperFunctions import applyCommands, splitString, sortAscWithKey
-from errors import InvalidEvalStringException
-
-
-"""
+﻿"""
 The following functions take the stack as paramter, pop the needed arguments and push the result.
 The stack gets mutated in place, so nothing is returned
 A always refers to the top item, B to the item after that, etc.
 """	
+
+import re
+
+from errors import InvalidEvalStringException
+from helperFunctions import applyCommands, splitString, sortAscWithKey
+from iposTypes import Item, String, Integer, Command, Regex, Array
+
+def IWrapInArray(stack):
+	content = stack.getContent()
+	stack.clear()
+	stack.pushArray(content)
 	
+def ISplatArray(stack):
+	modeList = [{
+			"types" : [Array],
+			"name" : "splatArray"
+		},
+	]
+	M, A = stack.popArguments(modeList, 1)
+	
+	# Push all element of A to the stack
+	if M == "splatArray":
+		for i in A:
+			stack.push(i)
+
 def IDuplicateTopStackItem(stack):
 	modeList = [{
 			"types" : [Item],
@@ -166,13 +183,20 @@ def IWrap(stack):
 def IReplace(stack):
 	modeList = [{
 			"types" : [String, String, String],
-			"name" : "replace"
-		}, 
+			"name" : "replaceString"
+		}, {
+			"types" : [String, Regex, Regex],
+			"name" : "replaceRegex"
+		}
 	]
 	M, C, B, A = stack.popArguments(modeList, 3)
 	
+	# Replaces all occurences of a string B with A in C
+	if M == "replaceString":
+		result = C.replace(B, A)
+		stack.pushString(result)
 	# Replaces all occurences of a regex pattern B with A in C
-	if M == "replace":
+	elif M == "replaceRegex":
 		result = re.sub(B, A, C)
 		stack.pushString(result)
 		
@@ -291,7 +315,7 @@ def IApplyToChars(stack):
 	
 	# Apply A to every character of B
 	if M == "applyToChars":
-		result = "".join(map(lambda c: applyCommands(A, c), B))
+		result = "".join(map(lambda c: applyCommands(A, c).join(), B))
 		stack.pushString(result)
 	
 def IApplyToParts(stack):
@@ -305,7 +329,7 @@ def IApplyToParts(stack):
 	# Apply A to every element of C.split(B)
 	if M == "applyToParts":
 		splittedStr = splitString(B, C)
-		result = B.join(map(lambda c: applyCommands(A, c), splittedStr))
+		result = B.join(map(lambda c: applyCommands(A, c).join(), splittedStr))
 		stack.pushString(result)
 	
 def IApplyToPartsRandomly(stack):
@@ -319,7 +343,7 @@ def IApplyToPartsRandomly(stack):
 	# Apply A to every element of C.split(B)
 	if M == "applyToPartsRandomly":
 		splittedStr = splitString(B, C)
-		result = B.join(map(lambda c: applyCommands(A, c, rand = True), splittedStr))
+		result = B.join(map(lambda c: applyCommands(A, c, rand = True).join(), splittedStr))
 		stack.pushString(result)
 		
 def ISortAsc(stack):
@@ -379,14 +403,22 @@ def ISortDescWithKey(stack):
 def ISort(stack):
 	modeList = [{
 			"types" : [String],
-			"name" : "sort"
-		},
+			"name" : "sortString"
+		}, {
+			"types" : [Array],
+			"name" : "sortArray"
+		}
 	]
 	M, A = stack.popArguments(modeList, 1)
 	
-	if M == "sort":
+	# Sort A anscending
+	if M == "sortString":
 		result = "".join(sorted(A))
 		stack.pushString(result)
+	# Sort A ascending using the str-representation of each element as key
+	elif M == "sortArray":
+		result = sorted(A, key=lambda e:str(e))
+		stack.pushArray(result)
 		
 def IUpperCase(stack):
 	modeList = [{
@@ -547,6 +579,9 @@ def ISplit(stack):
 			"types" : [String, String],
 			"name" : "splitByString"
 		}, {
+			"types" : [String, Regex],
+			"name" : "splitByRegex"
+		}, {
 			"types" : [String, Integer],
 			"name" : "splitByLength"
 		}, {
@@ -559,21 +594,28 @@ def ISplit(stack):
 	]
 	M, B, A = stack.popArguments(modeList, 2)
 	
-	# Split A on B
+	# Split B on A
 	if M == "splitByString":
+		result = B.split(A)
+		result = [String(s) for s in result if s]
+		
+		stack.pushArray(result)
+				
+	# Split B on the regex A
+	elif M == "splitByRegex":
 		result = re.split(A, B)
-		for s in result:
-			if s:
-				stack.pushString(s)
+		result = [String(s) for s in result if s]
+		
+		stack.pushArray(result)
 				
 	# Split B into parts of length A			
 	elif M == "splitByLength":
 		if A != 0:
-			parts = [B[i : i+A] for i in range(0, len(B), A)]
-			for part in parts:
-				stack.pushString(part)
+			parts = [String(B[i : i+A]) for i in range(0, len(B), A)]
+			
+			stack.pushArray(parts)
 		else:
-			stack.pushString(B)
+			stack.pushArray([String(B)])
 				
 	# Split A into B parts
 	elif M == "splitByAmount":
@@ -583,18 +625,22 @@ def ISplit(stack):
 			begin = 0
 			end = m + (r > 0)
 			
+			result = []
+			
 			for i in range(B):
-				stack.pushString(A[begin : end])
+				result.append(String(A[begin : end]))
 				begin = end
 				end += m + (i + 1 < r)
+				
+			stack.pushArray(result)
 		else:
-			stack.pushString(A)
+			stack.pushArray([String(A)])
 	
 	# Split B on newlines and apply A
 	elif M == "splitByNewlines":
 		for line in B.splitlines():
 			if line:
-				stack.pushString(applyCommands(A, line))
+				stack.pushArray(applyCommands(A, line).getContent())
 	
 def IJoin(stack):
 	modeList = [{
@@ -603,20 +649,28 @@ def IJoin(stack):
 		}, {
 			"types" : [Integer],
 			"name" : "joinTop"
+		}, {
+			"types" : [Array],
+			"name" : "joinArray"
 		},
 	]
 	M, A = stack.popArguments(modeList, 1)
 	
 	# Join stack on A
 	if M == "joinOnString":
-		result = A.join(stack.getContents())
+		result = A.join([str(i) for i in stack.getContent()])
 		stack.clear()
 		stack.pushString(result)
 		
 	# Join the top A elements of the stack into one string
-	if M == "joinTop":
+	elif M == "joinTop":
 		result = "".join([e.value for e in stack.getTopItems(A)])
 		for _ in range(A): stack.pop()
+		stack.pushString(result)
+		
+	# Join A into one string
+	elif M == "joinArray":
+		result = "".join([str(i) for i in A])
 		stack.pushString(result)
 		
 def IInsert(stack):
@@ -643,3 +697,5 @@ def IInsert(stack):
 			stack.pushString(result)
 		else:
 			stack.pushString(C)
+
+	

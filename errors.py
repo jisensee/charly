@@ -1,4 +1,4 @@
-class IposException(Exception):
+﻿class IposException(Exception):
 	def __init__(self):
 		self.message = "IposException: "
 
@@ -33,3 +33,7 @@ class InvalidEvalStringException(IposException):
 class MissingDoubleStringQuoteException(IposException):
 	def __init__(self, index):
 		self.message = "The double string starting at position %s is missing the second quote!" % index
+		
+class CommandNotFinishedException(IposException):
+	def __init__(self, startIndex):
+		self.message = "The command started at index %s is not closed!" % startIndex

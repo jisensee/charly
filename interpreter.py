@@ -1,8 +1,6 @@
-# endcoding: utf-8
-
 from commands import commands
-from errors import CommandNotExistingException, MissingCharacterException, InvalidVariableNameException, MissingDoubleStringQuoteException
-from iposTypes import Integer, String, Command, Item
+from errors import CommandNotExistingException, MissingCharacterException, InvalidVariableNameException, MissingDoubleStringQuoteException, CommandNotFinishedException
+from iposTypes import Integer, String, Command, Item, Regex
 
 
 variables = {
@@ -23,7 +21,7 @@ def handleMultiCharLiteral(stack, code, index, literalType):
 	"""
 	if literalType == String:
 		seperator = "\""
-	elif literalType == Command :
+	if literalType == Regex:
 		seperator = "`"
 		
 	separatorIndex = code.find(seperator, index + 1)
@@ -106,11 +104,45 @@ def handleSpace(code, index):
 		
 	return index
 	
+def handleCommandLiteral(stack, code, index):
+	"""
+	Pushes a new command-literal to the stack.
+	Returns the index of the next command in the code.
+	"""
+	
+	# Set the index to the first char in the command
+	index += 1
+	# Save the start of the command
+	start = index
+	# Count the opening braces we encounter so we don't end the command too early
+	openingBraces = 0
+	# Becomes true when we find the end of the command
+	endFound = False
+	
+	while not endFound:
+		# Raise error when we reach the end without a closing brace
+		if index == len(code):
+			raise CommandNotFinishedException(start)
+		# If we find an opening brace, we increase the counter, so we need one more closing one
+		elif code[index] == "{":
+			openingBraces += 1
+		# If we find a closing brace that closes another nested command
+		elif code[index] == "}" and openingBraces > 0:
+			openingBraces -= 1
+		# If we find the closing brace that ends the command
+		elif code[index] == "}" and openingBraces == 0:
+			endFound = True		
+		
+		index += 1
+		
+	stack.pushCommand(code[start : index-1])
+	
+	return index
 	
 def handleVariable(stack, code, index):
 	"""
-	Pushes the value of the  the variable at the given index to the stack
-	Returns the index of the next character in the code
+	Pushes the value of the  the variable at the given index to the stack.
+	Returns the index of the next character in the code.
 	"""
 	value = variables[code[index]]
 	
@@ -175,9 +207,11 @@ def run(code, stack):
 		elif code[i] == "\"":
 			i = handleMultiCharLiteral(stack, code, i, String)
 			
-		# Push multi char commands literal
 		elif code[i] == "`":
-			i = handleMultiCharLiteral(stack, code, i, Command)
+			i = handleMultiCharLiteral(stack, code, i, Regex)
+		# Push multi char commands literal
+		elif code[i] == "{":
+			i = handleCommandLiteral(stack, code, i)
 		
 		# If current char is a space, find the next non-space char and point i on it
 		elif code[i].isspace():

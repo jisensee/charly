@@ -1,8 +1,12 @@
-from iposTypes import Integer, String, Command
-from errors import InvalidStackContentsException
+﻿from errors import InvalidStackContentsException
+from iposTypes import Integer, String, Command, Array, Regex
+
 
 class Stack:
-	"""Represents one stack"""
+	"""
+	Represents one stack. The content is represented as a Python-list.
+	All elements of this list must be of one of the iposTypes.
+	"""
 	
 	def __init__(self, initialContent=[]):
 		"""
@@ -12,8 +16,8 @@ class Stack:
 		self.content = initialContent
 
 	def join(self):
-		""""Converts every item to string and joins them bottom to top."""
-		return "".join([str(i.value) for i in self.content])
+		""""Converts every item to a string and joins them bottom to top."""
+		return "".join([str(i) for i in self.content])
 
 	def pushString(self, string):
 		"""Push a string to the stack"""
@@ -22,14 +26,29 @@ class Stack:
 	def pushInteger(self, integer):
 		"""Push an integer to the stack"""
 		self.content.append(Integer(integer))
+		
+	def pushArray(self, array):
+		"""
+		Push an array to the stack. All elements of an array must be of one
+		of the iposTypes.
+		"""
+		self.content.append(Array(array))
 
 	def pushCommand(self, command):
 		"""Push a command to the stack"""
 		self.content.append(Command(command))
-
-	def getContents(self):
-		"""Returns a list of the string representaions of the stack contents"""
-		return [str(i.value) for i in self.content]
+		
+	def pushRegex(self, regex):
+		"""Push a regex to the stack"""
+		self.content.append(Regex(regex))
+	
+	def getContent(self):
+		"""Returns the content of the stack"""
+		return self.content
+	
+	def getUnpackedContent(self):
+		"""Returns the content of the stack with the values as raw python datatypes"""
+		return [i.value for i in self.content]
 
 	def push(self, item):
 		"""
