@@ -1,9 +1,9 @@
-# IPOS
+# Charly
 A stack-based code-golf language made for string processing.
 
 Work in progress, many functions to be implemented and to design.
 
-Check out the [tutorial](https://github.com/DenkerAffe/IPOS/wiki/Tutorial) to learn the language!
+Check out the [tutorial](https://github.com/DenkerAffe/Charly/wiki/Tutorial) to learn the language!
 
 ##Contribute
 If you want to implement planned functions, having an idea about a new function I didn't thought about or want to add some new fancy feaueres, go ahead and create a pull-request. However, make sure that all existing tests pass (shouldn't be an issue when adding new functions) and that you write some new tests for the new function (as soon as I set up the test suite). I won't merge pull requests where tests are missing or failing.
