@@ -3,7 +3,7 @@ import Stack from "./stack"
 import {String} from "./types"
 import fs from "fs"
 
-export default class Ipos {
+export default class Charly {
   static runCode(code, input) {
     const stack = new Stack(input ? [new String(input)] : [])
     return runCode(code, stack).toString()
