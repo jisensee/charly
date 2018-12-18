@@ -1,5 +1,5 @@
 {
-  "name": "charly-lang",
+  "name": "charly",
   "version": "1.0.0",
   "description": "A golfing language for string processing",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     "test": "mocha ./test --compilers js:babel-core/register --require ./test/helper.js",
     "docs": "babel-node tools/generateCommandDocs.js"
   },
-  "author": "DenkerAffe",
+  "author": "Jannis Isensee",
   "license": "ISC",
   "devDependencies": {
     "babel-cli": "^6.22.2",
