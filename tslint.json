@@ -35,6 +35,9 @@
         "limit": 80,
         "ignore-pattern": "(^\\W*[`'\"].*[`'\"])|(^import)"
       }
+    },
+    "indent": {
+      "options": ["spaces", 2]
     }
   },
   "rulesDirectory": []

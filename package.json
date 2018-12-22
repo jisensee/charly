@@ -6,7 +6,7 @@
   "bin": "dist/cli.js",
   "scripts": {
     "clean-dist": "rimraf dist",
-    "docs": "ts-node tools/generateCommandDocs.ts",
+    "docs": "ts-node tools/generateCommandDoc.ts && ts-node tools/generateVariableDoc.ts",
     "build": "npm run clean-dist && tsc",
     "lint": "tslint --project .",
     "test": "npm run lint && mocha"

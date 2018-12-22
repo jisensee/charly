@@ -3,7 +3,7 @@ import {
   MissingVariableNameError,
 } from '../../errors'
 import { Stack } from '../../stack'
-import { variables } from '../../variables'
+import { assignVariable } from '../../variables'
 import { TokenHandler } from '../tokenHandlers'
 import { TOKEN_ASSIGN_VARIABLE } from '../tokens'
 
@@ -21,7 +21,7 @@ export const assignVariableHandler: TokenHandler = {
     } else {
       const variableName = code[index + 1]
       const variableValue = stack.getItem(stack.size - 1)
-      variables[variableName] = variableValue
+      assignVariable(variableName, variableValue)
       return index + 2
     }
   },

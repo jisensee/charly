@@ -24,16 +24,17 @@ Command | Arguments | Result | Description
 function formatTypes(types: Array<new (a: any) => CItem>): string {
   const alpha = 'ABCDEFGHIJ'
 
-  return types
+  const r = types
     .map(
       (t, index) =>
         `${alpha[types.length - index - 1]}<${new t(null).typeName}>`,
     )
     .join(' ')
+  return r.length === 0 ? ' ' : r
 }
 
 commands
-  // .sort((c1, c2) => c1.key  c2.key)
+  .sort((c1, c2) => c1.key.localeCompare(c2.key))
   .forEach(c => {
     c.modeList.forEach(mode => {
       const args = formatTypes(mode.args)
@@ -46,4 +47,4 @@ commands
     })
   })
 
-writeFileSync('commandDoc.md', fileContent)
+writeFileSync('documentation/commands.md', fileContent)
