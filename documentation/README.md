@@ -1,8 +1,10 @@
 ## Welcome to the IPOS documentation!
 
-This documentation is meant to be a quick reference. To learn the language check out the [[Tutorial|Tutorial]].
-
 ### Index
 
+- [Tutorial](tutorial/README.md)
+- [Syntax](syntax.md)
 - [Commands](commands.md)
 - [Variables](variables.md)
+- [Codepage](codepage.md)
+- [Command-spec](command-spec.md)
