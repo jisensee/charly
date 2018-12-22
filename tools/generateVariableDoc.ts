@@ -2,7 +2,8 @@ import { writeFileSync } from 'fs'
 import { variables } from '../src/variables'
 
 // tslint:disable:no-trailing-whitespace
-let fileContent = `
+let fileContent = `# Variables
+
 Charly has a set of preinitialized variables.
 It is also possible to define custom variables with the = command.
 Variable names can only be one character long and defining custom

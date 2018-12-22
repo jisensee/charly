@@ -1,3 +1,4 @@
+# Variables
 
 Charly has a set of preinitialized variables.
 It is also possible to define custom variables with the = command.

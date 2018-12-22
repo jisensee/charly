@@ -1,3 +1,4 @@
+# Commands
 
 ### Notes
 * `A` refers to the item on top of the stack, `B` to the next one, etc. Every command has a fixed arity but might accept different combinations of types.
