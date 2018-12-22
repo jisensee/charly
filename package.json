@@ -1,26 +1,28 @@
 {
   "name": "charly",
-  "version": "1.0.0",
+  "version": "0.3.0",
   "description": "A golfing language for string processing",
   "main": "dist/index.js",
   "bin": "dist/cli.js",
   "scripts": {
-    "prepublish": "npm run compile && npm test",
     "clean-dist": "rimraf dist",
-    "compile": "npm run clean-dist && babel src --out-dir dist",
-    "test": "mocha ./test --compilers js:babel-core/register --require ./test/helper.js",
-    "docs": "babel-node tools/generateCommandDocs.js"
+    "docs": "ts-node tools/generateCommandDocs.ts",
+    "build": "npm run clean-dist && tsc",
+    "lint": "tslint --project .",
+    "test": "npm run lint && mocha"
   },
   "author": "Jannis Isensee",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.22.2",
-    "babel-core": "^6.22.1",
-    "babel-preset-es2015": "^6.22.0",
-    "babel-preset-stage-0": "^6.22.0",
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.17",
     "chai": "^3.5.0",
-    "eslint": "^3.16.1",
-    "mocha": "^3.2.0",
-    "rimraf": "^2.5.4"
+    "mocha": "^5.2.0",
+    "rimraf": "^2.5.4",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.12.0",
+    "typescript": "^3.2.2",
+    "typescript-tslint-plugin": "^0.2.1"
   }
 }
