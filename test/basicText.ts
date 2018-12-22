@@ -36,4 +36,30 @@ describe('basicText', () => {
       ensure`11 22'c++`.returns`1122c`
     })
   })
+
+  describe('h - firstChar/increment', () => {
+    it('A<str>', () => {
+      ensure`h`.withInput`abc`.returns`a`
+      ensure`h`.withInput`a`.returns`a`
+      ensure`""h`.returns``
+    })
+
+    it('A<int>', () => {
+      ensure`1h`.returns`2`
+      ensure`0h`.returns`1`
+    })
+  })
+
+  describe('v - lastChar/decrement', () => {
+    it('A<str>', () => {
+      ensure`v`.withInput`abc`.returns`c`
+      ensure`v`.withInput`a`.returns`a`
+      ensure`""v`.returns``
+    })
+
+    it('A<int>', () => {
+      ensure`2v`.returns`1`
+      ensure`1v`.returns`0`
+    })
+  })
 })

@@ -1,11 +1,12 @@
 # Variables
 
 Charly has a set of preinitialized variables.
-It is also possible to define custom variables with the = command.
-Variable names can only be one character long and defining custom
-variables overrides the default meaning of the chosen character.  
-Variables can not only be String or Integers, but also Commands. This
-allows to save a set of commands in a variable to use it multiple times.
+It is also possible to define custom variables with the `=` command.
+Variable names can only be one character long and defining custom variables 
+overrides the default meaning of the chosen character.  
+Variables can be of any type, including Commands.
+The latter allows to save a set of commands in a variable to use it multiple
+times.
 
 Name | Type | Value | Remark
 :--: | ---- | ----- | ------
