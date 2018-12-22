@@ -75,9 +75,8 @@ const stackCommands: Command[] = [
     modeList: [
       {
         name: 'copy',
-        // tslint:disable-next-line:max-line-length
-        description: `Copies the item with the index A to the top of the stack.
- Index 0 is the item on the bottom of the stack.`,
+        description:
+          'Copies the item with the index A to the top of the stack. Index 0 is the item on the bottom of the stack.',
         args: [CInteger],
         results: [],
         execute(stack: Stack, A: CInteger): void {

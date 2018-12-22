@@ -33,7 +33,7 @@
     "max-line-length": {
       "options": {
         "limit": 80,
-        "ignore-pattern": "^import"
+        "ignore-pattern": "(^\\W*[`'\"].*[`'\"])|(^import)"
       }
     }
   },

@@ -1,6 +1,8 @@
-import fs from "fs"
-import allCommands from "../src/commands/_allCommands"
+import { writeFileSync } from 'fs'
+import { commands } from '../src/commands/_allCommands'
+import { CItem } from '../src/types'
 
+// tslint:disable:max-line-length
 let fileContent = `
 ### Notes
 * \`A\` refers to the item on top of the stack, \`B\` to the next one, etc. Every command has a fixed arity but might accept different combinations of types.
@@ -13,26 +15,35 @@ IPOS knows the following types:
 * \`<str>\` -> String
 * \`<int>\` -> Integer
 * \`<cmd>\` -> Command
-* \`<arr>\` -> Array
+* \`<lst>\` -> List
 * \`<rgx>\` -> Regex
 * \`<itm>\` -> Item, any of  the ones above
 
 Command | Arguments | Result | Description
 :-----: | --------- | ------ | -----------`
-function formatTypes(types) {
-  const alpha = `ABCDEFGHIJ`
+function formatTypes(types: Array<new (a: any) => CItem>): string {
+  const alpha = 'ABCDEFGHIJ'
 
-  return types.map((t, index) => `${alpha[types.length - index - 1]}<${t.typeName}>`).join(` `)
+  return types
+    .map(
+      (t, index) =>
+        `${alpha[types.length - index - 1]}<${new t(null).typeName}>`,
+    )
+    .join(' ')
 }
 
-allCommands.sort((c1, c2) => c1.key < c2.key).forEach(c => {
-  c.modeList.forEach(mode => {
-    const args = formatTypes(mode.args)
-    const result = formatTypes(mode.results)
-    const description = mode.description.replace(/ ([A-Z]) /g, " `$1` ")
+commands
+  // .sort((c1, c2) => c1.key  c2.key)
+  .forEach(c => {
+    c.modeList.forEach(mode => {
+      const args = formatTypes(mode.args)
+      const result = formatTypes(mode.results)
+      const description = mode.description.replace(/ ([A-Z]) /g, ' `$1` ')
 
-    fileContent += `\n\`${c.key}\` | \`${args}\` | \`${result}\` | ${description}`
+      fileContent += `\n\`${
+        c.key
+      }\` | \`${args}\` | \`${result}\` | ${description}`
+    })
   })
-})
 
-fs.writeFileSync(`commandDoc.md`, fileContent)
+writeFileSync('commandDoc.md', fileContent)
