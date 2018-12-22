@@ -36,13 +36,16 @@ export class Stack {
 
   /**
    * Pop mulitple items from the stack at once.
-   * @param count The amount of items to be popped
+   * @param count The amount of items to be popped. If not given, all items
+   * will be popped.
    * @returns The top n items from the stack with the top item at the start of
    * the list
    */
-  public popItems(count: number): CItem[] {
+  public popItems(count?: number): CItem[] {
+    const countToPop = count ? count : this.size
+
     const resultList: CItem[] = []
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < countToPop; i++) {
       resultList.unshift(this.pop())
     }
     return resultList

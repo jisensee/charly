@@ -54,10 +54,6 @@ export class CList extends CItem {
   }
 
   public toString(): string {
-    if (this.value instanceof Array) {
-      return `[${this.value.map(e => e.toString()).join(', ')}]`
-    } else {
-      return ''
-    }
+    return this.value.map(e => e.toString()).join('')
   }
 }

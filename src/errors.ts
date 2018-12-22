@@ -52,3 +52,9 @@ export class CommandNotFinishedError extends CharlyError {
     super(`The command started at position ${position} is not closed!`)
   }
 }
+
+export class ListNotFinishedError extends CharlyError {
+  public constructor(position: number) {
+    super(`The list started at position ${position} is not closed!`)
+  }
+}
