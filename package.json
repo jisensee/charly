@@ -9,7 +9,8 @@
     "docs": "ts-node tools/generateCommandDoc.ts && ts-node tools/generateVariableDoc.ts",
     "build": "npm run clean-dist && tsc",
     "lint": "tslint --project .",
-    "test": "npm run lint && mocha"
+    "mocha": "mocha",
+    "test": "npm run lint && npm run mocha"
   },
   "author": "Jannis Isensee",
   "license": "ISC",

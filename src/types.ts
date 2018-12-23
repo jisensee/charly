@@ -21,13 +21,6 @@ export class CInteger extends CItem {
   }
 }
 
-export class CString extends CItem {
-  public value: string
-  public constructor(value: string) {
-    super(value, 'str')
-  }
-}
-
 export class CCommand extends CItem {
   public value: string
   public constructor(value: string) {
@@ -44,16 +37,32 @@ export class CRegex extends CItem {
 
 export class CList extends CItem {
   public value: CItem[]
-  public constructor(value: CItem[]) {
-    super(value, 'lst')
+  public constructor(value: CItem[], typeName: string = 'lst') {
+    super(value, typeName)
   }
 
-  public unpack(): CPrimitive[] {
-    const lst = this.value as CItem[]
-    return lst.map(e => e.value)
+  /**
+   * Convert every item of the list to a string and aply the given mapping
+   * function.
+   * @param mapper The mapping function
+   * @returns A CList of CStrings
+   */
+  public mapToStringList(mapper: (s: string) => string): CList {
+    const l = this.value
+      .map(i => i.toString())
+      .map(i => mapper(i))
+      .map(i => new CString(i))
+
+    return new CList(l)
   }
 
   public toString(): string {
     return this.value.map(e => e.toString()).join('')
+  }
+}
+
+export class CString extends CList {
+  public constructor(value: string) {
+    super(value.split('').map(c => new CItem(c)), 'str')
   }
 }

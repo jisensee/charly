@@ -6,7 +6,7 @@ import { Command } from './command'
 const swap: Command = {
   key: '/',
   arity: 2,
-  modeList: [
+  modes: [
     {
       name: 'swap',
       description: 'Swaps the top two stack items.',
@@ -23,7 +23,7 @@ const swap: Command = {
 const discard: Command = {
   key: ';',
   arity: 1,
-  modeList: [
+  modes: [
     {
       name: 'discard',
       description: 'Discards the top stack item.',
@@ -39,7 +39,7 @@ const discard: Command = {
 const duplicate: Command = {
   key: '_',
   arity: 1,
-  modeList: [
+  modes: [
     {
       name: 'duplicate',
       description: 'Duplicates the top stack item.',
@@ -56,7 +56,7 @@ const duplicate: Command = {
 const copy: Command = {
   key: '$',
   arity: 1,
-  modeList: [
+  modes: [
     {
       name: 'copy',
       description:
@@ -80,7 +80,7 @@ const copy: Command = {
 const rotate: Command = {
   key: '@',
   arity: 3,
-  modeList: [
+  modes: [
     {
       name: 'rotate',
       description:

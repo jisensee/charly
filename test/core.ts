@@ -24,6 +24,7 @@ describe('core', () => {
   it('pushing lists', () => {
     ensure`[1 3 "abc"]`.returns`13abc`
     ensure`[1[2 3['a"abc"]3]8]`.returns`123aabc38`
+    ensure`[]`.returns``
     ensure`[1`.throws(ListNotFinishedError)
     ensure`[[[1]2]`.throws(ListNotFinishedError)
   })

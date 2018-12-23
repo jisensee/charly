@@ -26,7 +26,7 @@ export const commandHandler: TokenHandler = {
       const topStackItems = stack.getTopItems(arity)
 
       // Find first mode that fits to the top stack types
-      const matchingModes = command.modeList.filter(mode =>
+      const matchingModes = command.modes.filter(mode =>
         topStackItems.every(
           (value, eIndex) => value instanceof mode.args[eIndex],
         ),
@@ -38,7 +38,7 @@ export const commandHandler: TokenHandler = {
 
         return index + 1
       } else {
-        const typesList = command.modeList.map(mode => mode.args)
+        const typesList = command.modes.map(mode => mode.args)
 
         const topStackTypes = topStackItems.map(i => i.typeName)
         const message = `Expected one of the types ${typesList} on the
