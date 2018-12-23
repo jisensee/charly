@@ -27,8 +27,7 @@ function formatTypes(types: Array<new (a: any) => CItem>): string {
 
   const r = types
     .map(
-      (t, index) =>
-        `${alpha[types.length - index - 1]}<${new t(null).typeName}>`,
+      (t, index) => `${alpha[types.length - index - 1]}<${new t('').typeName}>`,
     )
     .join(' ')
   return r.length === 0 ? ' ' : r
@@ -37,7 +36,7 @@ function formatTypes(types: Array<new (a: any) => CItem>): string {
 commands
   .sort((c1, c2) => c1.key.localeCompare(c2.key))
   .forEach(c => {
-    c.modeList.forEach(mode => {
+    c.modes.forEach(mode => {
       const args = formatTypes(mode.args)
       const result = formatTypes(mode.results)
       const description = mode.description.replace(/ ([A-Z]) /g, ' `$1` ')

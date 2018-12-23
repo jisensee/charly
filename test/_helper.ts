@@ -6,7 +6,7 @@ import { Stack } from '../src/stack'
 import { CItem, CString } from '../src/types'
 
 interface WithInputRetObj {
-  returns(expectedOutput: TemplateStringsArray): void
+  returns(expectedOutput: TemplateStringsArray): ReturnsRetObj
   throws(expectedError: new (a: any) => CharlyError): void
 }
 
@@ -38,9 +38,19 @@ function checkIfStackTypesMatch(
   actualStack: Stack,
   expectedStackTypes: Array<new (a: any) => CItem>,
 ): void {
-  const actualTypes = actualStack.content.map(i => i.typeName)
-  const expecedTypes = expectedStackTypes.map(t => new t(null).typeName)
-  expect(actualTypes).to.eql(expecedTypes)
+  expect(actualStack.size, 'Stack sizes do not match').to.equal(
+    expectedStackTypes.length,
+  )
+
+  actualStack.content.forEach((item, index) => {
+    const expectedType = expectedStackTypes[index]
+    const expectedTypeName = new expectedType('').typeName
+    const actualTypeName = item.typeName
+    if (!(item instanceof expectedType)) {
+      const message = `The types at position ${index} in the stack do not match`
+      expect(actualTypeName, message).to.equal(expectedTypeName)
+    }
+  })
 }
 
 export function ensure(codeLiterals: TemplateStringsArray): EnsureRetObj {
