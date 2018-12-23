@@ -1,6 +1,6 @@
 import { MissingCharacterError } from '../../errors'
 import { Stack } from '../../stack'
-import { CCommand, CItem, CPrimitive, CString } from '../../types'
+import { CCommand, CItem, CPrimitive, CRegex, CString } from '../../types'
 import { TokenHandler } from '../tokenHandlers'
 import { TOKEN_REGEX_LITERAL, TOKEN_STRING_LITERAL } from '../tokens'
 
@@ -28,7 +28,7 @@ export const regexLiteralHandler: TokenHandler = {
       stack,
       code,
       index,
-      CCommand,
+      CRegex,
       TOKEN_REGEX_LITERAL,
     )
   },
