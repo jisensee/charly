@@ -4,6 +4,7 @@
     "outDir": "./dist",
     "removeComments": true,
     "target": "es5",
+    "lib": ["es6"],
     "strictNullChecks": true,
     "types": ["node"],
     "typeRoots": ["node_modules/@types"],

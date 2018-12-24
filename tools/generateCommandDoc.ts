@@ -1,5 +1,5 @@
 import { writeFileSync } from 'fs'
-import { commands } from '../src/commands/_allCommands'
+import { allCommands } from '../src/commands'
 import { CItem } from '../src/types'
 
 // tslint:disable:max-line-length
@@ -20,8 +20,8 @@ IPOS knows the following types:
 * \`<rgx>\` -> Regex
 * \`<itm>\` -> Item, any of  the ones above
 
-Command | Arguments | Result | Description
-:-----: | --------- | ------ | -----------`
+Command | Mode | Arguments | Result | Description
+:-----: | ---- | --------- | ------ | -----------`
 function formatTypes(types: Array<new (a: any) => CItem>): string {
   const alpha = 'ABCDEFGHIJ'
 
@@ -33,7 +33,7 @@ function formatTypes(types: Array<new (a: any) => CItem>): string {
   return r.length === 0 ? ' ' : r
 }
 
-commands
+allCommands
   .sort((c1, c2) => c1.key.localeCompare(c2.key))
   .forEach(c => {
     c.modes.forEach(mode => {
@@ -41,9 +41,14 @@ commands
       const result = formatTypes(mode.results)
       const description = mode.description.replace(/ ([A-Z]) /g, ' `$1` ')
 
-      fileContent += `\n\`${
-        c.key
-      }\` | \`${args}\` | \`${result}\` | ${description}`
+      const colValues = [
+        `\`${c.key}\``,
+        mode.name,
+        `\`${args}\``,
+        `\`${result}\``,
+        description,
+      ]
+      fileContent += '\n' + colValues.join(' | ')
     })
   })
 

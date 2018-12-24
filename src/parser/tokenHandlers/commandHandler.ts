@@ -1,4 +1,4 @@
-import { commands } from '../../commands/_allCommands'
+import { allCommands } from '../../commands'
 import { Command } from '../../commands/command'
 import {
   CommandNotExistingError,
@@ -52,7 +52,7 @@ export const commandHandler: TokenHandler = {
 }
 
 function getMatchingCommand(token: string): Command | null {
-  const matchingCommands = commands.filter(cmd => cmd.key === token)
+  const matchingCommands = allCommands.filter(cmd => cmd.key === token)
   if (matchingCommands.length > 0) {
     return matchingCommands[0]
   } else {
