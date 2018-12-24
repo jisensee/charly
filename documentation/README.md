@@ -1,4 +1,4 @@
-## Welcome to the IPOS documentation!
+## Welcome to the Charly documentation!
 
 ### Index
 
