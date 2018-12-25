@@ -1,5 +1,10 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "charly/*": ["./*"],
+      "charly": ["*"]
+    },
     "module": "commonjs",
     "outDir": "./dist",
     "removeComments": true,

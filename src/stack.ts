@@ -1,4 +1,3 @@
-import { Mode } from './commands/command'
 import { InvalidStackContentsError } from './errors'
 import { CCommand, CInteger, CItem, CList, CRegex, CString } from './types'
 

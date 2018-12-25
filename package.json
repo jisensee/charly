@@ -6,12 +6,15 @@
   "bin": "dist/cli.js",
   "scripts": {
     "clean-dist": "rimraf dist",
-    "docs": "ts-node tools/generateCommandDoc.ts && ts-node tools/generateVariableDoc.ts",
     "build": "npm run clean-dist && tsc",
     "lint": "tslint --project .",
     "mocha": "mocha",
     "test": "npm run lint && npm run mocha",
-    "addCommand": "ts-node tools/addCommand.ts"
+    "genDocs": "npm run generateCommandDoc && npm run generateVariableDoc",
+    "addCommand": "ts-node tools/addCommand.ts",
+    "tsShell": "ts-node -r tsconfig-paths/register",
+    "generateCommandDoc": "ts-node -r tsconfig-paths/register tools/generateCommandDoc.ts",
+    "generateVariableDoc": "ts-node -r tsconfig-paths/register tools/generateVariableDoc.ts"
   },
   "author": "Jannis Isensee",
   "license": "ISC",
@@ -27,6 +30,7 @@
     "prompts": "^2.0.0",
     "rimraf": "^2.5.4",
     "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.7.0",
     "tslint": "^5.12.0",
     "typescript": "^3.2.2",
     "typescript-tslint-plugin": "^0.2.1"

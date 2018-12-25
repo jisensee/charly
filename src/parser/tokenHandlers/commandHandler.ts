@@ -1,5 +1,5 @@
+import { Command } from '../../command'
 import { allCommands } from '../../commands'
-import { Command } from '../../commands/command'
 import {
   CommandNotExistingError,
   InvalidStackContentsError,

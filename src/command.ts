@@ -1,5 +1,6 @@
-import { Stack } from '../stack'
-import { CItem, CPrimitive } from '../types'
+import { Command } from 'charly/command'
+import { Stack } from 'charly/stack'
+import { CItem, CPrimitive } from 'charly/types'
 
 /**
  * Represents one command.

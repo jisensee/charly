@@ -17,4 +17,3 @@ IPOS knows the following types:
 
 Command | Mode | Arguments | Result | Description
 :-----: | ---- | --------- | ------ | -----------
-`l` | lowercase | `A<lst>` | `A<lst>` | Convert every element in `A` to to a string and lowercase it. Nested lists will be flattened during that.

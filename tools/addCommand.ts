@@ -44,10 +44,9 @@ function getCommandFileContent(
   folderName: string,
   arity: number,
 ): string {
-  return `
-import { Stack } from '../../stack'
-import { CItem } from '../../types'
-import { Command } from '../command'
+  return `import { Command } from 'charly/command'
+import { Stack } from 'charly/stack'
+import { CItem } from 'charly/types'
 
 const ${folderName}: Command = {
   key: '${key}',
@@ -62,7 +61,7 @@ const ${folderName}: Command = {
     },
   ],
 }
-export {${folderName}}
+export { ${folderName} }
 `
 }
 
