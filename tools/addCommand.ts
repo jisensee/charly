@@ -67,7 +67,7 @@ export { ${folderName} }
 
 function getIndexFileContent(folderName: string): string {
   return `
-import {${folderName}} from './${folderName}'
-export {${folderName}}
+import { ${folderName} } from './${folderName}'
+export { ${folderName} }
 `
 }

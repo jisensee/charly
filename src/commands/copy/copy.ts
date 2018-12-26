@@ -1,7 +1,7 @@
 import { Command } from 'charly/command'
 import { InvalidStackContentsError } from 'charly/errors'
 import { Stack } from 'charly/stack'
-import { CInteger } from 'charly/types'
+import { CInteger, CItem } from 'charly/types'
 
 const copy: Command = {
   key: '$',
@@ -12,7 +12,7 @@ const copy: Command = {
       description:
         'Copies the item with the index A to the top of the stack. Index 0 is the item on the bottom of the stack.',
       args: [CInteger],
-      results: [],
+      results: [CItem],
       execute(stack: Stack, A: CInteger): void {
         if (stack.size === 0) {
           throw new InvalidStackContentsError(

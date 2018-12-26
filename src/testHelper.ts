@@ -1,9 +1,9 @@
 import { expect } from 'chai'
-import { Charly } from '../src'
-import { CharlyError } from '../src/errors'
-import { runCode } from '../src/parser/runCode'
-import { Stack } from '../src/stack'
-import { CItem, CString } from '../src/types'
+import { CharlyError } from 'charly/errors'
+import { runCode } from 'charly/parser/runCode'
+import { Stack } from 'charly/stack'
+import { CItem, CString } from 'charly/types'
+import { Charly } from '.'
 
 interface WithInputRetObj {
   returns(expectedOutput: TemplateStringsArray): ReturnsRetObj

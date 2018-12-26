@@ -1,12 +1,12 @@
+import { ensure } from 'charly/testHelper'
 import { describe, it } from 'mocha'
 import {
   CommandNotFinishedError,
   InvalidStackContentsError,
   ListNotFinishedError,
   MissingVariableNameError,
-} from '../src/errors'
-import { CCommand, CInteger, CList, CRegex, CString } from '../src/types'
-import { ensure } from './_helper'
+} from './errors'
+import { CCommand, CInteger, CList, CRegex, CString } from './types'
 
 // tslint:disable:no-unused-expression
 

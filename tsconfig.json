@@ -1,9 +1,8 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "charly/*": ["./*"],
-      "charly": ["*"]
+      "charly/*": ["./src/*"]
     },
     "module": "commonjs",
     "outDir": "./dist",
