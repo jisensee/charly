@@ -27,8 +27,8 @@ function getTestFileContent(cmd: Command): string {
   const modes = cmd.modes.map(mode => mode.name).join('/')
   const modeTests = getModeTests(cmd)
 
-  return `import { describe, it } from 'mocha'
-import { ensure } from 'charly/testHelper'
+  return `import { ensure } from 'charly/testHelper'
+import { describe, it } from 'mocha'
 
 // tslint:disable:no-unused-expression
 
