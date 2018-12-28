@@ -14,8 +14,8 @@
     "genDocs": "npm run generateCommandDoc && npm run generateVariableDoc",
     "addCommand": "npm run tsNode -- tools/addCommand.ts",
     "addTests": "ts-node -r tsconfig-paths/register tools/addTests.ts",
-    "generateCommandDoc": "npm run tsNode - tools/generateCommandDoc.ts",
-    "generateVariableDoc": "npm run tsNode tools/generateVariableDoc.ts"
+    "generateCommandDoc": "npm run tsNode -- tools/generateCommandDoc.ts",
+    "generateVariableDoc": "npm run tsNode -- tools/generateVariableDoc.ts"
   },
   "author": "Jannis Isensee",
   "license": "ISC",

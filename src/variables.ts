@@ -27,6 +27,7 @@ const variables: Variable[] = [
   {
     name: 'B',
     value: new CString('\n'),
+    remark: 'Newline',
   },
   {
     name: 'D',

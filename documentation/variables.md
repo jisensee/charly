@@ -10,12 +10,11 @@ times.
 
 Name | Type | Value | Remark
 :--: | ---- | ----- | ------
-| `B` | `<str>` | `
-` |  |
-| `D` | `<str>` | `.` |  |
+| `B` | `<str>` | `\n` | Newline |
+| `D` | `<str>` | `` |  |
 | `E` | `<str>` | ` ` | Empty string |
-| `L` | `<str>` | `abcdefghijklmnopqrstuvwxyz` |  |
-| `N` | `<str>` | `0123456789` |  |
-| `S` | `<str>` | ` ` | Space |
-| `T` | `<int>` | `10` |  |
-| `U` | `<str>` | `_` |  |
+| `L` | `<str>` | `` |  |
+| `N` | `<str>` | `` |  |
+| `S` | `<str>` | `` | Space |
+| `T` | `<int>` | `` |  |
+| `U` | `<str>` | `` |  |

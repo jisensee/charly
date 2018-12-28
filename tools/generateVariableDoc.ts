@@ -22,10 +22,19 @@ variables
     const nameCol = `\`${variable.name}\``
     const typeCol = `\`<${variable.value.typeName}>\``
     const value = variable.value.toString()
-    const valueCol = `\`${value.length === 0 ? ' ' : value}\``
+    const valueCol = `\`${value.length === 0 ? ' ' : escapeValue(value)}\``
     const remarkCol = variable.remark || ''
     const row = [nameCol, typeCol, valueCol, remarkCol].join(' | ')
     fileContent += `\n| ${row} |`
   })
 
 writeFileSync('documentation/variables.md', fileContent)
+
+function escapeValue(val: string): string {
+  switch (val) {
+    case '\n':
+      return '\\n'
+  }
+
+  return ''
+}
