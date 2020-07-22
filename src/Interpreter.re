@@ -10,12 +10,7 @@ let rec run = (initialStack, tokens) =>
             listStack->Stack.toStringList->Stack.pushList(stack, _)
           )
       | ParserToken.Command(index, cmd) =>
-        cmd
-        ->Command.execute(stack, _)
-        ->Option.map(s => s->Result.Ok)
-        ->Option.getWithDefault(
-            Result.Error(Error.InvalidCommandArgs(index)),
-          )
+        cmd->Command.execute(index, stack, _)
       }
     )
   );

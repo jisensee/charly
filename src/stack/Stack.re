@@ -42,8 +42,17 @@ let pop3 = stack =>
   | _ => None
   };
 
-let peek1 = stack =>
-  switch (stack) {
+let peek1 =
+  fun
   | [i, ..._] => Some(i)
-  | _ => None
-  };
+  | _ => None;
+
+let peek2 =
+  fun
+  | [i1, i2, ..._] => Some((i1, i2))
+  | _ => None;
+
+let peek3 =
+  fun
+  | [i1, i2, i3, ..._] => Some((i1, i2, i3))
+  | _ => None;

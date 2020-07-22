@@ -12,6 +12,8 @@ let pop2: t => option((t, (StackItem.t, StackItem.t)));
 let pop3: t => option((t, (StackItem.t, StackItem.t, StackItem.t)));
 
 let peek1: t => option(StackItem.t);
+let peek2: t => option((StackItem.t, StackItem.t));
+let peek3: t => option((StackItem.t, StackItem.t, StackItem.t));
 
 let toString: t => string;
 let toStringList: t => list(string);

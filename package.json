@@ -5,6 +5,7 @@
     "re:build": "bsb -make-world",
     "re:watch": "bsb -make-world -w",
     "re:clean": "bsb -clean-world",
+    "jest": "jest",
     "test": "run-s re:build jest",
     "test:watch": "jest --coverage --watchAll",
     "start": "run-p re:watch test:watch"

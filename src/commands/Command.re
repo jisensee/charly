@@ -1,7 +1,9 @@
-open StackItem;
+open Stack_Commands;
+open Basic_Commands;
 
 type t =
   | Head
+  | Concat
   | Duplicate
   | Discard;
 
@@ -10,25 +12,56 @@ let fromString =
   | "h" => Head->Some
   | "_" => Duplicate->Some
   | ";" => Discard->Some
+  | "+" => Concat->Some
   | _ => None;
 
-let discard = stack =>
-  switch (stack->Stack.pop1) {
-  | Some((s, _)) => s->Some
-  | None => None
-  };
+let execute = (index, stack, command) => {
+  let invalidArgCount = (i, arity) =>
+    Result.Error(Error.InvalidCommandArgCount(i, arity));
+  let invalidArgs = (peekFn, peekMapper) =>
+    Result.Error(
+      Error.InvalidCommandArgs(
+        index,
+        stack->peekFn->Option.mapWithDefault([], peekMapper),
+      ),
+    );
+  let handleCommand =
+    fun
+    | CommandFn.Arity1(cmd) =>
+      switch (stack->Stack.pop1) {
+      | None => invalidArgCount(index, 1)
+      | Some((s, i)) =>
+        switch (cmd(s, i)) {
+        | Some(res) => Result.Ok(res)
+        | None => invalidArgs(Stack.peek1, i => [i])
+        }
+      }
+    | CommandFn.Arity2(cmd) =>
+      switch (stack->Stack.pop2) {
+      | None => invalidArgCount(index, 2)
+      | Some((s, (i1, i2))) =>
+        switch (cmd(s, (i1, i2))) {
+        | Some(res) => Result.Ok(res)
+        | None => invalidArgs(Stack.peek2, ((i1, i2)) => [i1, i2])
+        }
+      }
+    | CommandFn.Arity3(cmd) =>
+      switch (stack->Stack.pop3) {
+      | None => invalidArgCount(index, 3)
+      | Some((s, (i1, i2, i3))) =>
+        switch (cmd(s, (i1, i2, i3))) {
+        | Some(res) => Result.Ok(res)
+        | None => invalidArgs(Stack.peek3, ((i1, i2, i3)) => [i1, i2, i3])
+        }
+      };
 
-let duplicate = stack => stack->Stack.peek1->Option.map(Stack.push(stack));
-
-let head = stack =>
-  switch (stack->Stack.pop1) {
-  | Some((s, List(lst))) => lst->List.head->Option.map(Stack.pushString(s))
-  | Some((s, Int(i))) => Stack.pushInt(s, i + 1)->Some
-  | _ => None
-  };
-let execute = (stack, command) =>
-  switch (command) {
-  | Head => stack->head
-  | Duplicate => stack->duplicate
-  | Discard => stack->discard
-  };
+  (
+    switch (command) {
+    | Head => head
+    | Duplicate => duplicate
+    | Discard => discard
+    | Concat => concat
+    }
+  )
+  ->handleCommand;
+};
