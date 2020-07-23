@@ -26,7 +26,7 @@ Command | Name | Arguments | Result | Description | Implemented
 `+` | concat | `A<str> B<str>` | `A<str>` | Appends `A` to the end of `B` | :heavy_check_mark:
 `+` | add | `A<int> B<int>` | `A<int>` | Adds `A` and `B` | :heavy_check_mark:
 `$` | copy | `A<int>` | `A<itm>` | Copies the item with the index `A` to the top of the stack. Index 0 is the item on the bottom of the stack. | :x:
-`h` | firstElement | `A<lst|str>` | `A<str>` | Pushes the first element/char of `A`. Pushes nothing if `A` is empty. | :x:
+`h` | firstElement | `A<lst\|str>` | `A<str>` | Pushes the first element/char of `A`. Pushes nothing if `A` is empty. | :x:
 `h` | increment | `A<int>` | `A<int>` | Increments A. | :heavy_check_mark:
 `k` | swapCase | `A<lst>` | `A<lst>` | Convert every element in `A` to to a string and swap its case. Nested lists will be flattened during that. | :x:
 `l` | lowercase | `A<lst>` | `A<lst>` | Convert every element in `A` to to a string and lowercase it. Nested lists will be flattened during that. | :x:
