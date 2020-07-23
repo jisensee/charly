@@ -24,4 +24,16 @@ describe("Parser.parse", () => {
     expectOk("\"a\\\"b", [String(0, "a\"b")]),
   );
   test("parses open ended strings", expectOk("\"abc", [String(0, "abc")]));
+
+  test(
+    "parses variable assignments",
+    expectOk(
+      "=A=B",
+      [VariableAssignment(0, "A"), VariableAssignment(2, "B")],
+    ),
+  );
+  test(
+    "fail on incomplete variable assignments",
+    expectError("=", Error.IncompleteVariableAssignment),
+  );
 });

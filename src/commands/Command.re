@@ -2,6 +2,7 @@ open Stack_Commands;
 open Basic_Commands;
 
 type t =
+  | PushVariable(string)
   | Head
   | Concat
   | Duplicate
@@ -13,9 +14,11 @@ let fromString =
   | "_" => Duplicate->Some
   | ";" => Discard->Some
   | "+" => Concat->Some
+  | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J") as v =>
+    PushVariable(v)->Some
   | _ => None;
 
-let execute = (index, stack, command) => {
+let execute = (index, stack, variables, command) => {
   let invalidArgCount = (i, arity) =>
     Result.Error(Error.InvalidCommandArgCount(i, arity));
   let invalidArgs = (peekFn, peekMapper) =>
@@ -53,7 +56,8 @@ let execute = (index, stack, command) => {
         | Some(res) => Result.Ok(res)
         | None => invalidArgs(Stack.peek3, ((i1, i2, i3)) => [i1, i2, i3])
         }
-      };
+      }
+    | CommandFn.Custom(fn) => fn();
 
   (
     switch (command) {
@@ -61,6 +65,15 @@ let execute = (index, stack, command) => {
     | Duplicate => duplicate
     | Discard => discard
     | Concat => concat
+    | PushVariable(var) =>
+      CommandFn.Custom(
+        () =>
+          variables
+          ->Variables.get(var)
+          ->Option.map(Stack.push(stack))
+          ->Option.getWithDefault(stack)
+          ->Result.Ok,
+      )
     }
   )
   ->handleCommand;

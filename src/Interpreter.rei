@@ -1,1 +1,3 @@
-let run: (Stack.t, list(ParserToken.t)) => Result.t(Stack.t, Error.t);
+let run:
+  (Stack.t, Variables.t, list(ParserToken.t)) =>
+  Result.t((Stack.t, Variables.t), Error.t);

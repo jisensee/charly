@@ -11,6 +11,7 @@ let rec handleToken = (t: Code.char, tail: Code.t) => {
     handleDigit(index, d, tail)->ParserToken.mapInt(index)
   | (index, "[") =>
     extractListChars(index, tail, 1, [])->ParserToken.mapList(index, parse)
+  | (index, "=") => ParserToken.mapVariableAssignment(index, tail)
   | (index, c) =>
     switch (Command.fromString(c)) {
     | Some(cmd) => Result.Ok((Command(index, cmd), tail))

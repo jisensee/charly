@@ -1,6 +1,7 @@
 type t =
   | String(Code.index, string)
   | Int(Code.index, int)
+  | VariableAssignment(Code.index, string)
   | Command(Code.index, Command.t)
   | List(Code.index, list(t));
 
@@ -16,3 +17,9 @@ let mapList = (res, index, parse) =>
       parse(listCode)->Result.map(c => (c, rest))
     )
   ->Result.map(((listTokens, rest)) => (List(index, listTokens), rest));
+
+let mapVariableAssignment = (index, tail) =>
+  switch (tail) {
+  | [(_, v), ...rest] => Result.Ok((VariableAssignment(index, v), rest))
+  | [] => Result.Error(Error.IncompleteVariableAssignment)
+  };
