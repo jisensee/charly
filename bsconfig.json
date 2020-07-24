@@ -7,6 +7,10 @@
       "subdirs": true
     },
     {
+      "dir": "doc-gen",
+      "type": "dev"
+    },
+    {
       "dir": "__tests__",
       "type": "dev"
     }

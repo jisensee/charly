@@ -8,7 +8,8 @@
     "jest": "jest",
     "test": "run-s re:build jest",
     "test:watch": "jest --coverage --watchAll",
-    "start": "run-p re:watch test:watch"
+    "start": "run-p re:watch test:watch",
+    "gen-command-doc": "node ./doc-gen/CommandDocGen.bs.js"
   },
   "keywords": [
     "BuckleScript"
