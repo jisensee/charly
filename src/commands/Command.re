@@ -1,22 +1,25 @@
 open Command_Stack;
 open Command_Head;
 open Command_Add;
+open Command_Repeat;
 
 type t =
   | PushVariable(string)
   | Head
   | Add
   | Duplicate
-  | Discard;
+  | Discard
+  | Repeat;
 
 let fromString =
   fun
+  | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J") as v =>
+    PushVariable(v)->Some
   | "h" => Head->Some
   | "_" => Duplicate->Some
   | ";" => Discard->Some
   | "+" => Add->Some
-  | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J") as v =>
-    PushVariable(v)->Some
+  | "*" => Repeat->Some
   | _ => None;
 
 let execute = (index, stack, variables, command) => {
@@ -66,6 +69,7 @@ let execute = (index, stack, variables, command) => {
     | Duplicate => duplicate
     | Discard => discard
     | Add => add
+    | Repeat => repeat
     | PushVariable(var) =>
       CommandFn.Custom(
         () =>

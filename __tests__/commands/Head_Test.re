@@ -3,6 +3,7 @@ open CommandTestUtils;
 open StackItem;
 
 let test = testCommandOk(Command.Head);
+
 describe("Head [String]", () => {
   test("gets the first char of A", [String("abc")], [String("a")]);
   test("does nothing with empty string", [String("")], []);

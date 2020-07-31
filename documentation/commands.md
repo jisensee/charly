@@ -20,8 +20,8 @@ Command | Name | Arguments | Result | Description | Implemented
 |`$`|copy|`A<int>`|`A<itm>`|Copy the item with the index `A` to the top of the stack with index 0 being the bottom item. If there is no item at the give index, nothing is pushed.|:x:
 |`%`|replace|`A<str> B<str> C<str>`|`A<str>`|Replace all non-overlapping occurences of `B` in `C` with `A`.|:x:
 | | |`A<str> B<rgx> C<str>`|`A<str>`|Replace all non-overlapping matches of `B` in `C` with `A`.|:x:
-|`*`|repeat|`A<int> B<str>`|`A<str>`|Repeat `B` `A` times.|:x:
-| | |`A<str> B<int>`|`A<str>`|Repeat every character in `A` `B` times.|:x:
+|`*`|repeat|`A<int> B<str>`|`A<str>`|Repeat `B` `A` times.|:heavy_check_mark:
+| | |`A<str> B<int>`|`A<str>`|Repeat every character in `A` `B` times.|:heavy_check_mark:
 |`+`|add|`A<lst> B<lst>`|`A<lst>`|Append `A` to the end of `B`.|:heavy_check_mark:
 | | |`A<str> B<str>`|`A<str>`|Append `A` to the end of `B`.|:heavy_check_mark:
 | | |`A<int> B<int>`|`A<int>`|Add `A` and `B`.|:heavy_check_mark:
