@@ -536,7 +536,7 @@ let commands: list(command) = [
     ],
   },
   {
-    key: "|",
+    key: "\|",
     name: "insert",
     modes: [
       {
@@ -561,6 +561,24 @@ let commands: list(command) = [
         args: [Int, String, List],
         result: [String],
         description: "Inserts B after every Ath string in C.",
+        implemented: false,
+      },
+    ],
+  },
+  {
+    key: "%",
+    name: "replace",
+    modes: [
+      {
+        args: [String, String, String],
+        result: [String],
+        description: "Replace all non-overlapping occurences of B in C with A.",
+        implemented: false,
+      },
+      {
+        args: [String, Regex, String],
+        result: [String],
+        description: "Replace all non-overlapping matches of B in C with A.",
         implemented: false,
       },
     ],

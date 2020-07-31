@@ -34,6 +34,10 @@ Command | Name | Arguments | Result | Description | Implemented
 |`L`|length|`A<lst>`|`A<lst>`|Get the length of `A`.|:x:
 | | |`A<str>`|`A<str>`|Get the length of `A`.|:x:
 | | |`A<int>`|`A<int>`|Get the number of digits of `A`.|:x:
+|`\|`|insert|`A<str> B<int> C<str>`|`A<str>`|Insert `A` at index `B` in `C`.|:x:
+| | |`A<int> B<str> C<str>`|`A<str>`|Inserts `B` after every `A`th character in `C`.|:x:
+| | |`A<str> B<int> C<lst>`|`A<str>`|Insert `A` at index `B` in `C`.|:x:
+| | |`A<int> B<str> C<lst>`|`A<str>`|Inserts `B` after every `A`th string in `C`.|:x:
 |`_`|duplicate|`A<itm>`|`A<itm> B<itm>`|Duplicate the top stack item|:heavy_check_mark:
 |`a`|sortAscending|`A<lst>`|`A<lst>`|Sort all strings in `A` in ascending order.|:x:
 | | |`A<str>`|`A<str>`|Sort all characters in `A` in ascending order.|:x:
@@ -74,9 +78,5 @@ Command | Name | Arguments | Result | Description | Implemented
 |`z`|allButLast|`A<lst>`|`A<lst>`|Get all but the last element of `A`. Does nothing if the length of A is <2.|:x:
 | | |`A<str>`|`A<str>`|Get all but the last char of `A`. Does nothing if the length of A is <2.|:x:
 | | |`A<int>`|`A<int>`|Get all but the last digit of `A`. Does nothing if the length of A is <2.|:x:
-|`|`|insert|`A<str> B<int> C<str>`|`A<str>`|Insert `A` at index `B` in `C`.|:x:
-| | |`A<int> B<str> C<str>`|`A<str>`|Inserts `B` after every `A`th character in `C`.|:x:
-| | |`A<str> B<int> C<lst>`|`A<str>`|Insert `A` at index `B` in `C`.|:x:
-| | |`A<int> B<str> C<lst>`|`A<str>`|Inserts `B` after every `A`th string in `C`.|:x:
 |`~`|splitMap|`A<cmd> B<str> C<str>`|`A<str>`|Split `C` on `B`, apply `A` to every part of the result and join the mapped parts back on B whle discarding empty parts.|:x:
 | | |`A<cmd> B<rgx> C<str>`|`A<str>`|Split `C` on all matches of `B`, apply `A` to every part of the result and join the mapped parts back on matches groups. Empty strings are not discarded here.|:x:
