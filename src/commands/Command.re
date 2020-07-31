@@ -5,10 +5,12 @@ open Command_Repeat;
 
 type t =
   | PushVariable(string)
-  | Head
-  | Add
   | Duplicate
   | Discard
+  | Swap
+  | Rotate
+  | Head
+  | Add
   | Repeat;
 
 let fromString =
@@ -18,6 +20,8 @@ let fromString =
   | "h" => Head->Some
   | "_" => Duplicate->Some
   | ";" => Discard->Some
+  | "/" => Swap->Some
+  | "@" => Rotate->Some
   | "+" => Add->Some
   | "*" => Repeat->Some
   | _ => None;
@@ -65,9 +69,11 @@ let execute = (index, stack, variables, command) => {
 
   (
     switch (command) {
-    | Head => head
     | Duplicate => duplicate
     | Discard => discard
+    | Swap => swap
+    | Rotate => rotate
+    | Head => head
     | Add => add
     | Repeat => repeat
     | PushVariable(var) =>

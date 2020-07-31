@@ -2,7 +2,7 @@ open Jest;
 open CommandTestUtils;
 open StackItem;
 
-let test = testCommandOk(Command.Head);
+let test = testCommandOk("h");
 
 describe("Head [String]", () => {
   test("gets the first char of A", [String("abc")], [String("a")]);

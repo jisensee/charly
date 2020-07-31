@@ -27,12 +27,12 @@ Command | Name | Arguments | Result | Description | Implemented
 | | |`A<int> B<int>`|`A<int>`|Add `A` and `B`.|:heavy_check_mark:
 |`-`|remove|`A<str> B<str>`|`A<str>`|Remove all occurences of `A` in `B`.|:x:
 | | |`A<int> B<str>`|`A<str>`|Remove very `A`th character in `B`.|:x:
-|`/`|swap|`A<itm>`|`A<itm>`|Swap the top two stack items.|:x:
+|`/`|swap|`A<itm>`|`A<itm>`|Swap the top two stack items.|:heavy_check_mark:
 |`:`|slice|`A<int> B<int> C<str>`|`A<str>`|Slice out a substring of `C` from index `B` (inclusive) to `A` (exclusive).|:x:
 |`;`|discard|`A<itm>`| |Discard the top stack item.|:heavy_check_mark:
 |`<`|takeFirst|`A<int> B<str>`|`A<str>`|Take the first `A` characters from `B`. Do nothing if B is empty.|:x:
 |`>`|takeLast|`A<int> B<str>`|`A<str>`|Take the last `A` characters from `B`. Do nothing if B is empty.|:x:
-|`@`|rotate|`A<itm> B<itm> C<itm>`|`A<itm> B<itm> C<itm>`|Push the 3rd item to the top and shift the other two down.|:x:
+|`@`|rotate|`A<itm> B<itm> C<itm>`|`A<itm> B<itm> C<itm>`|Push the 3rd item to the top and shift the other two down.|:heavy_check_mark:
 |`L`|length|`A<lst>`|`A<lst>`|Get the length of `A`.|:x:
 | | |`A<str>`|`A<str>`|Get the length of `A`.|:x:
 | | |`A<int>`|`A<int>`|Get the number of digits of `A`.|:x:

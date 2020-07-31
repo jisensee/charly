@@ -2,7 +2,7 @@ open Jest;
 open CommandTestUtils;
 open StackItem;
 
-let test = testCommandOk(Command.Repeat);
+let test = testCommandOk("*");
 
 describe("Repeat [Int, String]", () => {
   test("repeats B A times", [Int(2), String("ab")], [String("abab")]);

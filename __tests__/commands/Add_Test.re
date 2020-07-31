@@ -2,7 +2,7 @@ open Jest;
 open CommandTestUtils;
 open StackItem;
 
-let test = testCommandOk(Command.Add);
+let test = testCommandOk("+");
 
 describe("Add [String, String", () => {
   test(
