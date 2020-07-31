@@ -44,7 +44,7 @@ let commands: list(command) = [
       {
         args: [Item],
         result: [Item],
-        description: "Swaps the top two stack items.",
+        description: "Swap the top two stack items.",
         implemented: false,
       },
     ],
@@ -56,7 +56,7 @@ let commands: list(command) = [
       {
         args: [Int],
         result: [Item],
-        description: "Copies the item with the index A to the top of the stack with index 0 being the bottom item. If there is no item at the give index, nothing is pushed.",
+        description: "Copy the item with the index A to the top of the stack with index 0 being the bottom item. If there is no item at the give index, nothing is pushed.",
         implemented: false,
       },
     ],
