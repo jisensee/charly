@@ -1,10 +1,11 @@
-open Stack_Commands;
-open Basic_Commands;
+open Command_Stack;
+open Command_Head;
+open Command_Add;
 
 type t =
   | PushVariable(string)
   | Head
-  | Concat
+  | Add
   | Duplicate
   | Discard;
 
@@ -13,7 +14,7 @@ let fromString =
   | "h" => Head->Some
   | "_" => Duplicate->Some
   | ";" => Discard->Some
-  | "+" => Concat->Some
+  | "+" => Add->Some
   | ("A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J") as v =>
     PushVariable(v)->Some
   | _ => None;
@@ -64,7 +65,7 @@ let execute = (index, stack, variables, command) => {
     | Head => head
     | Duplicate => duplicate
     | Discard => discard
-    | Concat => concat
+    | Add => add
     | PushVariable(var) =>
       CommandFn.Custom(
         () =>

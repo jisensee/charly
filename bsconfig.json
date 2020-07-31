@@ -12,6 +12,7 @@
     },
     {
       "dir": "__tests__",
+      "subdirs": true,
       "type": "dev"
     }
   ],

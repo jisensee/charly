@@ -11,6 +11,11 @@
     "start": "run-p re:watch test:watch",
     "gen-command-doc": "node ./doc-gen/CommandDocGen.bs.js"
   },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "CommandTestUtils.bs.js"
+    ]
+  },
   "keywords": [
     "BuckleScript"
   ],

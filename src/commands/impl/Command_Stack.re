@@ -1,5 +1,4 @@
 open CommandFn;
-open StackItem;
 
 let discard = Arity1((stack, _) => stack->Some);
 

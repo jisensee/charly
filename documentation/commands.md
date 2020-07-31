@@ -22,7 +22,7 @@ Command | Name | Arguments | Result | Description | Implemented
 | | |`A<str> B<rgx> C<str>`|`A<str>`|Replace all non-overlapping matches of `B` in `C` with `A`.|:x:
 |`*`|repeat|`A<int> B<str>`|`A<str>`|Repeat `B` `A` times.|:x:
 | | |`A<str> B<int>`|`A<str>`|Repeat every character in `A` `B` times.|:x:
-|`+`|add|`A<lst> B<lst>`|`A<lst>`|Append `A` to the end of `B`.|:x:
+|`+`|add|`A<lst> B<lst>`|`A<lst>`|Append `A` to the end of `B`.|:heavy_check_mark:
 | | |`A<str> B<str>`|`A<str>`|Append `A` to the end of `B`.|:heavy_check_mark:
 | | |`A<int> B<int>`|`A<int>`|Add `A` and `B`.|:heavy_check_mark:
 |`-`|remove|`A<str> B<str>`|`A<str>`|Remove all occurences of `A` in `B`.|:x:
@@ -48,8 +48,8 @@ Command | Name | Arguments | Result | Description | Implemented
 |`f`|filter|`A<cmd> B<lst>`|`A<lst>`|Remove all strings from `B` for which the application of `A` results in an empty string.|:x:
 | | |`A<cmd> B<str>`|`A<str>`|Remove all characters from `B` for which the application of `A` result in an empty string.|:x:
 |`h`|head|`A<int>`|`A<int>`|Increment `A`.|:heavy_check_mark:
-| | |`A<lst>`|`A<str>`|Get the first element of `A`. Does nothing if A is empty.|:x:
-| | |`A<str>`|`A<str>`|Get the first char of `A`. Does nothing if A is empty.|:x:
+| | |`A<lst>`|`A<str>`|Get the first element of `A`. Does nothing if A is empty.|:heavy_check_mark:
+| | |`A<str>`|`A<str>`|Get the first char of `A`. Does nothing if A is empty.|:heavy_check_mark:
 |`i`|parseInt|`A<int>`|`A<str>`|Convert `A` to a string.|:x:
 | | |`A<str>`|`A<int>`|Convert a to an int. Non-digit characters are removed before. Pushes nothing if no digit characters are present in `A`.|:x:
 | | |`A<lst>`|`A<int>`|Convert `A` to a string and then to an int following the same rules as the string variant.|:x:
