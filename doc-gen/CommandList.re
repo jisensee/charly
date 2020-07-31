@@ -536,7 +536,7 @@ let commands: list(command) = [
     ],
   },
   {
-    key: "\|",
+    key: "\\|",
     name: "insert",
     modes: [
       {

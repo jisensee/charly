@@ -17,7 +17,9 @@ Charly knows the following types:
 Command | Name | Arguments | Result | Description | Implemented
 :-----: | ---- | --------- | ------ | ----------- | ------------
 |`#`|execute|`A<cmd>`| |Execute `A` by using the current stack.|:x:
-|`$`|copy|`A<int>`|`A<itm>`|Copies the item with the index `A` to the top of the stack with index 0 being the bottom item. If there is no item at the give index, nothing is pushed.|:x:
+|`$`|copy|`A<int>`|`A<itm>`|Copy the item with the index `A` to the top of the stack with index 0 being the bottom item. If there is no item at the give index, nothing is pushed.|:x:
+|`%`|replace|`A<str> B<str> C<str>`|`A<str>`|Replace all non-overlapping occurences of `B` in `C` with `A`.|:x:
+| | |`A<str> B<rgx> C<str>`|`A<str>`|Replace all non-overlapping matches of `B` in `C` with `A`.|:x:
 |`*`|repeat|`A<int> B<str>`|`A<str>`|Repeat `B` `A` times.|:x:
 | | |`A<str> B<int>`|`A<str>`|Repeat every character in `A` `B` times.|:x:
 |`+`|add|`A<lst> B<lst>`|`A<lst>`|Append `A` to the end of `B`.|:x:
@@ -25,7 +27,7 @@ Command | Name | Arguments | Result | Description | Implemented
 | | |`A<int> B<int>`|`A<int>`|Add `A` and `B`.|:heavy_check_mark:
 |`-`|remove|`A<str> B<str>`|`A<str>`|Remove all occurences of `A` in `B`.|:x:
 | | |`A<int> B<str>`|`A<str>`|Remove very `A`th character in `B`.|:x:
-|`/`|swap|`A<itm>`|`A<itm>`|Swaps the top two stack items.|:x:
+|`/`|swap|`A<itm>`|`A<itm>`|Swap the top two stack items.|:x:
 |`:`|slice|`A<int> B<int> C<str>`|`A<str>`|Slice out a substring of `C` from index `B` (inclusive) to `A` (exclusive).|:x:
 |`;`|discard|`A<itm>`| |Discard the top stack item.|:heavy_check_mark:
 |`<`|takeFirst|`A<int> B<str>`|`A<str>`|Take the first `A` characters from `B`. Do nothing if B is empty.|:x:
