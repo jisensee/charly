@@ -2,6 +2,8 @@ open Command_Stack;
 open Command_Head;
 open Command_Add;
 open Command_Repeat;
+open Command_TakeFirst;
+open Command_TakeLast;
 
 type t =
   | PushVariable(string)
@@ -11,6 +13,8 @@ type t =
   | Rotate
   | Head
   | Add
+  | TakeFirst
+  | TakeLast
   | Repeat;
 
 let fromString =
@@ -23,6 +27,8 @@ let fromString =
   | "/" => Swap->Some
   | "@" => Rotate->Some
   | "+" => Add->Some
+  | "<" => TakeFirst->Some
+  | ">" => TakeLast->Some
   | "*" => Repeat->Some
   | _ => None;
 
@@ -75,6 +81,8 @@ let execute = (index, stack, variables, command) => {
     | Rotate => rotate
     | Head => head
     | Add => add
+    | TakeFirst => takeFirst
+    | TakeLast => takeLast
     | Repeat => repeat
     | PushVariable(var) =>
       CommandFn.Custom(

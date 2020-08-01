@@ -30,8 +30,8 @@ Command | Name | Arguments | Result | Description | Implemented
 |`/`|swap|`A<itm>`|`A<itm>`|Swap the top two stack items.|:heavy_check_mark:
 |`:`|slice|`A<int> B<int> C<str>`|`A<str>`|Slice out a substring of `C` from index `B` (inclusive) to `A` (exclusive).|:x:
 |`;`|discard|`A<itm>`| |Discard the top stack item.|:heavy_check_mark:
-|`<`|takeFirst|`A<int> B<str>`|`A<str>`|Take the first `A` characters from `B`. Do nothing if B is empty.|:x:
-|`>`|takeLast|`A<int> B<str>`|`A<str>`|Take the last `A` characters from `B`. Do nothing if B is empty.|:x:
+|`<`|takeFirst|`A<int> B<str>`|`A<str>`|Take the first `A` characters from `B`. Do nothing if B is empty.|:heavy_check_mark:
+|`>`|takeLast|`A<int> B<str>`|`A<str>`|Take the last `A` characters from `B`. Do nothing if B is empty.|:heavy_check_mark:
 |`@`|rotate|`A<itm> B<itm> C<itm>`|`A<itm> B<itm> C<itm>`|Push the 3rd item to the top and shift the other two down.|:heavy_check_mark:
 |`L`|length|`A<lst>`|`A<lst>`|Get the length of `A`.|:x:
 | | |`A<str>`|`A<str>`|Get the length of `A`.|:x:
