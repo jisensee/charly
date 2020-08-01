@@ -6,6 +6,7 @@ let pushInt = (stack, i) => i->StackItem.Int->push(stack, _);
 let pushList = (stack, lst) => lst->StackItem.List->push(stack, _);
 let empty = [];
 
+let fromStringList = l => l->List.map(s => s->StackItem.String);
 let toStringList = stack => stack->List.reverse->List.map(StackItem.toString);
 let toString = stack => stack->toStringList->List.reduce("", (++));
 

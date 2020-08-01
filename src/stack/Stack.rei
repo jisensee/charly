@@ -16,4 +16,5 @@ let peek2: t => option((StackItem.t, StackItem.t));
 let peek3: t => option((StackItem.t, StackItem.t, StackItem.t));
 
 let toString: t => string;
+let fromStringList: list(string) => t;
 let toStringList: t => list(string);

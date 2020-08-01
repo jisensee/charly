@@ -6,7 +6,9 @@ type t =
   | NoValueOnStackForAssignment(Code.index)
   | InvalidCommandArgs(Code.index, list(StackItem.t))
   | InvalidCommandArgCount(Code.index, int)
-  | UnknownToken(Code.index, string);
+  | UnknownToken(Code.index, string)
+  | SourceFileNotFound
+  | InvalidCliArgs(string);
 
 module ErrorUtils = {
   let wrap = (i, msg) => "Position: " ++ Int.toString(i + 1) ++ ": " ++ msg;
@@ -34,5 +36,7 @@ module ErrorUtils = {
         ++ Int.toString(required)
         ++ " needed",
       )
-    | UnknownToken(i, t) => wrap(i, "Unknown token '" ++ t ++ "'");
+    | UnknownToken(i, t) => wrap(i, "Unknown token '" ++ t ++ "'")
+    | SourceFileNotFound => "Source file could not be found"
+    | InvalidCliArgs(msg) => msg;
 };
